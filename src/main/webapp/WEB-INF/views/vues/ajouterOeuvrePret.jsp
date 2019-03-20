@@ -26,7 +26,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Propriétaire </label>
             <div class="col-md-3">
-                <select name="adherentId" size="1">
+                <select name="proprietaireid" size="1">
                     <c:forEach items="${mesProprietaires}" var="item">
                         <option value="${item.idPropietaire}">${item.nomProprietaire}</option>
                     </c:forEach>
