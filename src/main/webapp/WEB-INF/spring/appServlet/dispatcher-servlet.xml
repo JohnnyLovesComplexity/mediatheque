@@ -10,8 +10,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     <bean name="/multiaction/*.htm" class="com.epul.controle.ControleurAdherent"/>
     
     <bean name="/oeuvre/*.htm" class="com.epul.controle.ControleurOeuvre"/>
-    <bean name="/oeuvrepret/*.htm" class="com.epul.controle.ControleurOeuvre"/>
-    <bean name="/oeuvrevente/*.htm" class="com.epul.controle.ControleurOeuvre"/>
+    <!--<bean name="/oeuvrepret/*.htm" class="com.epul.controle.ControleurOeuvre"/>
+    <bean name="/oeuvrevente/*.htm" class="com.epul.controle.ControleurOeuvre"/>-->
     
     <bean name="/login/*.htm" class="com.epul.controle.ControleurAuthentification"/>
 </beans>
