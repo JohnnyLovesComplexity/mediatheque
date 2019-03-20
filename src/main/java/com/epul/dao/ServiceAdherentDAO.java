@@ -48,9 +48,9 @@ public class ServiceAdherentDAO {
 			adherent = mesAdherents.get(0);
 			session.close();
 		}
-	 catch (HibernateException ex) {
-		throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
-	}
+		 catch (HibernateException ex) {
+			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+		}
 
 		return adherent;
 	}
