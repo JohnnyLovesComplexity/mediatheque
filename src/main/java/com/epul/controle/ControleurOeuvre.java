@@ -1,18 +1,14 @@
 package com.epul.controle;
 
-import com.epul.dao.ServiceAdherentDAO;
 import com.epul.dao.ServiceOeuvreDAO;
 import com.epul.meserreurs.MonException;
-import com.epul.metier.AdherentEntity;
 import com.epul.metier.OeuvrepretEntity;
 import com.epul.metier.OeuvreventeEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +24,7 @@ public class ControleurOeuvre {
 	 * @return Return an instance of `ModelAndView` with the require page.
 	 */
 	@NotNull
-	@RequestMapping(value = "listerOeuvre.htm")
+	@RequestMapping("listerOeuvre.htm")
 	public ModelAndView listOeuvre(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
 		
@@ -55,9 +51,9 @@ public class ControleurOeuvre {
 	 * @return Return an instance of `ModelAndView` with the require page.
 	 */
 	@NotNull
-	@RequestMapping
+	@RequestMapping("ajouterOeuvrePret")
 	public ModelAndView ajouterOeuvrePret(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response) {
-		return ajouterOeuvre(request, response);
+		return new ModelAndView("vues/ajouterOeuvrePret");
 	}
 	
 	/**
@@ -68,20 +64,10 @@ public class ControleurOeuvre {
 	 * @param response The HTTP response. Not used here by the function.
 	 * @return Return an instance of `ModelAndView` with the require page.
 	 */
+	@NotNull
+	@RequestMapping("ajouterOeuvreVente")
 	public ModelAndView ajouterOeuvreVente(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response) {
-		return ajouterOeuvre(request, response);
-	}
-	
-	/**
-	 * FRONT function.
-	 * Redirect the user to the page to add a masterpiece.
-	 * @param request The HTTP request, where the function will feed some instances that can be used in the `.jsp` file.
-	 *                It is not used by this function.
-	 * @param response The HTTP response. Not used here by the function.
-	 * @return Return an instance of `ModelAndView` with the require page.
-	 */
-	public ModelAndView ajouterOeuvre(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response) {
-		return new ModelAndView("vues/ajouterOeuvre");
+		return new ModelAndView("vues/ajouterOeuvreVente");
 	}
 	
 	/**
@@ -91,6 +77,8 @@ public class ControleurOeuvre {
 	 * @param response The HTTP response. Not used here by the function.
 	 * @return Return an instance of `ModelAndView` with the require page.
 	 */
+	@NotNull
+	@RequestMapping("insererOeuvrePret")
 	public ModelAndView insererOeuvrePret(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
 		
@@ -115,6 +103,8 @@ public class ControleurOeuvre {
 	 * @param response The HTTP response. Not used here by the function.
 	 * @return Return an instance of `ModelAndView` with the require page.
 	 */
+	@NotNull
+	@RequestMapping("insererOeuvreVente")
 	public ModelAndView insererOeuvreVente(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
 		

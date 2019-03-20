@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import com.epul.meserreurs.*;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.Query;
@@ -24,7 +25,7 @@ public class ServiceOeuvreDAO {
 	 * @return A list of the masterpieces.
 	 */
 	public List<OeuvrepretEntity> listOeuvrePret() {
-		return listOeuvre(OeuvrepretEntity.class);
+		return listOeuvre(OeuvrepretEntity.class, "titreOeuvrevente");
 	}
 	
 	/**
@@ -32,18 +33,20 @@ public class ServiceOeuvreDAO {
 	 * @return A list of the masterpieces.
 	 */
 	public List<OeuvreventeEntity> listOeuvreVente() {
-		return listOeuvre(OeuvreventeEntity.class);
+		return listOeuvre(OeuvreventeEntity.class, "titreOeuvrevente");
 	}
 	
 	/**
 	 * List all the masterpieces (vente).
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param clazz The class of the generic type `T`.
+	 * @param attributeToOrder The attribute of the object that will be used to sort the list. If null, the list is not
+	 *                         sorted.
 	 * @return A list of the masterpieces.
 	 */
-	private <T> List<T> listOeuvre(@NotNull Class<T> clazz) {
+	private <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
 		List<T> oeuvres = null;
-		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o ORDER BY o.titreOeuvrepret";
+		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o" + (attributeToOrder != null ? " ORDER BY o." + attributeToOrder : "");
 		
 		try {
 			Session session = ServiceHibernate.currentSession();
@@ -55,6 +58,15 @@ public class ServiceOeuvreDAO {
 		}
 		
 		return oeuvres;
+	}
+	/**
+	 * List all the masterpieces (vente).
+	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
+	 * @param clazz The class of the generic type `T`.
+	 * @return A list of the masterpieces.
+	 */
+	private <T> List<T> listOeuvre(@NotNull Class<T> clazz) {
+		return listOeuvre(clazz, null);
 	}
 	
 	/**
