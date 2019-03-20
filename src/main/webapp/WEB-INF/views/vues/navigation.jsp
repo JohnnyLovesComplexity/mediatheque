@@ -30,6 +30,30 @@
                         <li><a href="listerAdherent.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les adhérents</a></li>
                     </ul>
                 </li>
+                
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-book"></span>
+                        Oeuvres
+                        <span class="caret"></span>
+                    </a>
+                    
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="ajouterOeuvre.htm">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Ajout Oeuvre
+                            </a>
+                        </li>
+                        <li>
+                            <a href="listerOeuvre.htm">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                Lister Oeuvre
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
                 <li><a href="javascript:fermer()"><span class="glyphicon glyphicon-log-out"></span> Quitter</a></li>
                 </c:if>
 
