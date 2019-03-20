@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txtprenom" value="${oeuvrevente.titreOeuvrevente}" id="prenom"
+                <INPUT type="text" name="txttitre" value="${oeuvrevente.titreOeuvrevente}" id="prenom"
                        class="form-control" min="0">
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Prix de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="prixoeuvre" value="${oeuvrevente.prixOeuvrevente}" id="ville"
+                <INPUT type="text" name="numberprix" value="${oeuvrevente.prixOeuvrevente}" id="ville"
                        class="form-control" min="0">
             </div>
         </div>

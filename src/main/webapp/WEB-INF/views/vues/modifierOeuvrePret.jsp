@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txtprenom" value="${oreuvrepret.titreOeuvrepret}" id="prenom"
+                <INPUT type="text" name="txttitre" value="${oreuvrepret.titreOeuvrepret}" id="prenom"
                        class="form-control" min="0">
             </div>
         </div>
