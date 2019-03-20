@@ -40,9 +40,12 @@
                     
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="ajouterOeuvre.htm">
+                            <a href="ajouterOeuvreVente.htm">
                                 <span class="glyphicon glyphicon-plus"></span>
-                                Ajout Oeuvre
+                                Ajout Oeuvre en vente
+                            </a><a href="ajouterOeuvrePret.htm">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Ajout Oeuvre en prêt
                             </a>
                         </li>
                         <li>
