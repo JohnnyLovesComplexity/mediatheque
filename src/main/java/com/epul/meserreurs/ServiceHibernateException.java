@@ -1,21 +1,27 @@
 package com.epul.meserreurs;
-public class ServiceHibernateException extends RuntimeException 
-{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	// --------------------------------
-    public ServiceHibernateException() 
-    {    super(); }
+
+public class ServiceHibernateException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
+
     // --------------------------------
-    public ServiceHibernateException(String message) 
-    {    super(message); }
+    public ServiceHibernateException() {
+        super();
+    }
+
     // --------------------------------
-    public ServiceHibernateException(Throwable cause) 
-    {    super(cause); }
+    public ServiceHibernateException(String message) {
+        super(message);
+    }
+
     // --------------------------------
-    public ServiceHibernateException(String message, Throwable cause) 
-    {    super(message, cause); }
+    public ServiceHibernateException(Throwable cause) {
+        super(cause);
+    }
+
+    // --------------------------------
+    public ServiceHibernateException(String message, Throwable cause) {
+        super(message, cause);
+    }
     // --------------------------------
 }
