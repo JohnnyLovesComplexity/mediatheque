@@ -5,7 +5,7 @@
 <body>
 <%@include file="navigation.jsp"%>
 <H1> Ajout d'un adhérent </H1>
-<form method="post" action="insererAdherent.htm" onsubmit="return teste()">
+<form method="post" action="insererOeuvreVente.htm" onsubmit="return teste()">
     <div class="col-md-12 well well-md">
         <h1>Formulaire de modifications d'oeuvres </h1>
         <div class="row" >
