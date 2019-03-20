@@ -10,7 +10,28 @@ import com.epul.dao.ServiceAdherentDAO;
 import com.epul.meserreurs.*;
 import com.epul.metier.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class ControleurOeuvre {
+	
+	@RequestMapping(value = "listerOeuvre.htm")
+	public ModelAndView listOeuvre(HttpServletRequest request, HttpServletResponse response) {
+		String destination;
+		
+		try {
+			// HttpSession session = request.getSession();
+			ServiceAdherentDAO unServiceAdherentDAO = new ServiceAdherentDAO();
+			request.setAttribute("oeuvres", unServiceAdherentDAO.consulterListeAdherents());
+			destination = "vues/listerAdherent";
+		} catch (MonException e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+			
+		}
+		
+		return destination;
+	}
 
 }
