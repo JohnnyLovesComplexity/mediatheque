@@ -1,19 +1,17 @@
 package com.epul.dao;
 
-import java.util.*;
-import java.util.function.Function;
-
-import com.epul.metier.*;
+import com.epul.meserreurs.MonException;
+import com.epul.metier.OeuvrepretEntity;
+import com.epul.metier.OeuvreventeEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import com.epul.meserreurs.*;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.io.Closeable;
+import java.util.List;
 
 /**
  * Service that manage the link between the web application (DAO) and the database.
@@ -25,7 +23,7 @@ public class ServiceOeuvreDAO {
 	 * @return A list of the masterpieces.
 	 */
 	public List<OeuvrepretEntity> listOeuvrePret() {
-		return listOeuvre(OeuvrepretEntity.class, "titreOeuvrevente");
+		return listOeuvre(OeuvrepretEntity.class, "titreOeuvrepret");
 	}
 	
 	/**
@@ -47,14 +45,17 @@ public class ServiceOeuvreDAO {
 	private <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
 		List<T> oeuvres = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o" + (attributeToOrder != null ? " ORDER BY o." + attributeToOrder : "");
+		Session session = null;
 		
 		try {
-			Session session = ServiceHibernate.currentSession();
+			session = ServiceHibernate.currentSession();
 			TypedQuery<T> query = session.createQuery(rawQuery, clazz);
 			oeuvres = query.getResultList();
-			session.close();
 		} catch (HibernateException ex) {
-			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+			throw new MonException("Impossible d'accèder à la SessionFactory: ", ex.getMessage());
+		} finally {
+			if (session != null)
+				session.close();
 		}
 		
 		return oeuvres;
@@ -98,12 +99,11 @@ public class ServiceOeuvreDAO {
 		List<T> oeuvres = null;
 		T oeuvre = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o WHERE o.idAdherent=" + id;
-		try {
-			Session session = ServiceHibernate.currentSession();
+		
+		try (Session session = ServiceHibernate.currentSession()) {
 			TypedQuery<T> query = session.createQuery(rawQuery, clazz);
 			oeuvres = query.getResultList();
 			oeuvre = oeuvres.get(0);
-			session.close();
 		}
 		catch (HibernateException ex) {
 			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
@@ -134,14 +134,12 @@ public class ServiceOeuvreDAO {
 	 */
 	private <T> void insertOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
-		try {
-			Session session = ServiceHibernate.currentSession();
+		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			
 			session.save(oeuvre);
 			
 			tx.commit();
-			session.close();
 		} catch (HibernateException ex) {
 			ex.printStackTrace();
 			if (tx != null)
@@ -174,14 +172,12 @@ public class ServiceOeuvreDAO {
 	private <T> void deleteOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		
-		try {
-			Session   session = ServiceHibernate.currentSession();
+		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			
 			session.delete(oeuvre);
 			
 			tx.commit();
-			session.close();
 		} catch (HibernateException ex) {
 			ex.printStackTrace();
 			if (tx != null)
@@ -216,14 +212,12 @@ public class ServiceOeuvreDAO {
 	 */
 	private <T> void updateOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
-		try {
-			Session   session = ServiceHibernate.currentSession();
+		try (Session   session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			
 			session.merge(oeuvre);
 			
 			tx.commit();
-			session.close();
 		} catch (HibernateException ex) {
 			ex.printStackTrace();
 			if (tx != null)
