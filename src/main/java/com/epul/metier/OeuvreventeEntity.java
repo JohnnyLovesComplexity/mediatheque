@@ -13,6 +13,8 @@ public class OeuvreventeEntity {
     private String etatOeuvrevente;
     private double prixOeuvrevente;
 
+    private ProprietaireEntity proprietaire;
+
     @Id
     @Column(name = "id_oeuvrevente")
     public int getIdOeuvrevente() {
@@ -51,6 +53,14 @@ public class OeuvreventeEntity {
 
     public void setPrixOeuvrevente(double prixOeuvrevente) {
         this.prixOeuvrevente = prixOeuvrevente;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_proprietaire", referencedColumnName="id_proprietaire")
+    public ProprietaireEntity getProprietaire() { return proprietaire; }
+
+    public void setProprietaire(ProprietaireEntity proprietaire) {
+        this.proprietaire = proprietaire;
     }
 
     @Override
