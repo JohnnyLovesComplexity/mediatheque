@@ -1,6 +1,7 @@
 package com.epul.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 20/02/2017.
@@ -11,11 +12,17 @@ public class ProprietaireEntity {
     private int idProprietaire;
     private String nomProprietaire;
     private String prenomProprietaire;
+    private Collection<OeuvrepretEntity> oeuvrepretsByIdProprietaire;
+    private Collection<OeuvreventeEntity> oeuvreventesByIdProprietaire;
 
     @Id
-    @Column(name = "id_proprietaire")
+    @Column(name = "id_proprietaire", nullable = false, insertable = false, updatable = false)
     public int getIdProprietaire() {
         return idProprietaire;
+    }
+
+    public void setIdProprietaire(Integer idProprietaire) {
+        this.idProprietaire = idProprietaire;
     }
 
     public void setIdProprietaire(int idProprietaire) {
@@ -23,7 +30,7 @@ public class ProprietaireEntity {
     }
 
     @Basic
-    @Column(name = "nom_proprietaire")
+    @Column(name = "nom_proprietaire", nullable = false, length = 100)
     public String getNomProprietaire() {
         return nomProprietaire;
     }
@@ -33,7 +40,7 @@ public class ProprietaireEntity {
     }
 
     @Basic
-    @Column(name = "prenom_proprietaire")
+    @Column(name = "prenom_proprietaire", nullable = true, length = 100)
     public String getPrenomProprietaire() {
         return prenomProprietaire;
     }
@@ -64,5 +71,23 @@ public class ProprietaireEntity {
         result = 31 * result + (nomProprietaire != null ? nomProprietaire.hashCode() : 0);
         result = 31 * result + (prenomProprietaire != null ? prenomProprietaire.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "proprietaireByIdProprietaire")
+    public Collection<OeuvrepretEntity> getOeuvrepretsByIdProprietaire() {
+        return oeuvrepretsByIdProprietaire;
+    }
+
+    public void setOeuvrepretsByIdProprietaire(Collection<OeuvrepretEntity> oeuvrepretsByIdProprietaire) {
+        this.oeuvrepretsByIdProprietaire = oeuvrepretsByIdProprietaire;
+    }
+
+    @OneToMany(mappedBy = "proprietaireByIdProprietaire")
+    public Collection<OeuvreventeEntity> getOeuvreventesByIdProprietaire() {
+        return oeuvreventesByIdProprietaire;
+    }
+
+    public void setOeuvreventesByIdProprietaire(Collection<OeuvreventeEntity> oeuvreventesByIdProprietaire) {
+        this.oeuvreventesByIdProprietaire = oeuvreventesByIdProprietaire;
     }
 }

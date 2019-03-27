@@ -1,6 +1,7 @@
 package com.epul.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 20/02/2017.
@@ -10,11 +11,18 @@ import javax.persistence.*;
 public class OeuvrepretEntity {
     private int idOeuvrepret;
     private String titreOeuvrepret;
+    private Integer idProprietaire;
+    private Collection<EmpruntEntity> empruntsByIdOeuvrepret;
+    private ProprietaireEntity proprietaireByIdProprietaire;
 
     @Id
-    @Column(name = "id_oeuvrepret")
+    @Column(name = "id_oeuvrepret", nullable = false)
     public int getIdOeuvrepret() {
         return idOeuvrepret;
+    }
+
+    public void setIdOeuvrepret(Integer idOeuvrepret) {
+        this.idOeuvrepret = idOeuvrepret;
     }
 
     public void setIdOeuvrepret(int idOeuvrepret) {
@@ -22,7 +30,7 @@ public class OeuvrepretEntity {
     }
 
     @Basic
-    @Column(name = "titre_oeuvrepret")
+    @Column(name = "titre_oeuvrepret", nullable = false, length = 200)
     public String getTitreOeuvrepret() {
         return titreOeuvrepret;
     }
@@ -50,5 +58,34 @@ public class OeuvrepretEntity {
         int result = idOeuvrepret;
         result = 31 * result + (titreOeuvrepret != null ? titreOeuvrepret.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "id_proprietaire", nullable = true, insertable = false, updatable = false)
+    public Integer getIdProprietaire() {
+        return idProprietaire;
+    }
+
+    public void setIdProprietaire(Integer idProprietaire) {
+        this.idProprietaire = idProprietaire;
+    }
+
+    @OneToMany(mappedBy = "oeuvrepretByIdOeuvrepret")
+    public Collection<EmpruntEntity> getEmpruntsByIdOeuvrepret() {
+        return empruntsByIdOeuvrepret;
+    }
+
+    public void setEmpruntsByIdOeuvrepret(Collection<EmpruntEntity> empruntsByIdOeuvrepret) {
+        this.empruntsByIdOeuvrepret = empruntsByIdOeuvrepret;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_proprietaire", referencedColumnName = "id_proprietaire")
+    public ProprietaireEntity getProprietaireByIdProprietaire() {
+        return proprietaireByIdProprietaire;
+    }
+
+    public void setProprietaireByIdProprietaire(ProprietaireEntity proprietaireByIdProprietaire) {
+        this.proprietaireByIdProprietaire = proprietaireByIdProprietaire;
     }
 }

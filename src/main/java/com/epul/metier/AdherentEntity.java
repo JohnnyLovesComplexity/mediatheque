@@ -1,6 +1,7 @@
 package com.epul.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 20/02/2017.
@@ -12,11 +13,17 @@ public class AdherentEntity {
     private String nomAdherent;
     private String prenomAdherent;
     private String villeAdherent;
+    private Collection<EmpruntEntity> empruntsByIdAdherent;
+    private Collection<ReservationEntity> reservationsByIdAdherent;
 
     @Id
-    @Column(name = "id_adherent")
+    @Column(name = "id_adherent", nullable = false)
     public int getIdAdherent() {
         return idAdherent;
+    }
+
+    public void setIdAdherent(Integer idAdherent) {
+        this.idAdherent = idAdherent;
     }
 
     public void setIdAdherent(int idAdherent) {
@@ -24,7 +31,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "nom_adherent")
+    @Column(name = "nom_adherent", nullable = false, length = 100)
     public String getNomAdherent() {
         return nomAdherent;
     }
@@ -34,7 +41,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "prenom_adherent")
+    @Column(name = "prenom_adherent", nullable = true, length = 100)
     public String getPrenomAdherent() {
         return prenomAdherent;
     }
@@ -44,7 +51,7 @@ public class AdherentEntity {
     }
 
     @Basic
-    @Column(name = "ville_adherent")
+    @Column(name = "ville_adherent", nullable = true, length = 100)
     public String getVilleAdherent() {
         return villeAdherent;
     }
@@ -77,5 +84,23 @@ public class AdherentEntity {
         result = 31 * result + (prenomAdherent != null ? prenomAdherent.hashCode() : 0);
         result = 31 * result + (villeAdherent != null ? villeAdherent.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "adherentByIdAdherent")
+    public Collection<EmpruntEntity> getEmpruntsByIdAdherent() {
+        return empruntsByIdAdherent;
+    }
+
+    public void setEmpruntsByIdAdherent(Collection<EmpruntEntity> empruntsByIdAdherent) {
+        this.empruntsByIdAdherent = empruntsByIdAdherent;
+    }
+
+    @OneToMany(mappedBy = "adherentByIdAdherent")
+    public Collection<ReservationEntity> getReservationsByIdAdherent() {
+        return reservationsByIdAdherent;
+    }
+
+    public void setReservationsByIdAdherent(Collection<ReservationEntity> reservationsByIdAdherent) {
+        this.reservationsByIdAdherent = reservationsByIdAdherent;
     }
 }

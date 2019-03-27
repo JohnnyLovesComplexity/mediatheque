@@ -1,6 +1,7 @@
 package com.epul.metier;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by christian on 20/02/2017.
@@ -12,13 +13,19 @@ public class OeuvreventeEntity {
     private String titreOeuvrevente;
     private String etatOeuvrevente;
     private double prixOeuvrevente;
-
-    private ProprietaireEntity proprietaire;
+//    private ProprietaireEntity proprietaire;
+    private Integer idProprietaire;
+    private ProprietaireEntity proprietaireByIdProprietaire;
+    private Collection<ReservationEntity> reservationsByIdOeuvrevente;
 
     @Id
-    @Column(name = "id_oeuvrevente")
+    @Column(name = "id_oeuvrevente", nullable = false, insertable = false, updatable = false)
     public int getIdOeuvrevente() {
         return idOeuvrevente;
+    }
+
+    public void setIdOeuvrevente(Integer idOeuvrevente) {
+        this.idOeuvrevente = idOeuvrevente;
     }
 
     public void setIdOeuvrevente(int idOeuvrevente) {
@@ -26,7 +33,7 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "titre_oeuvrevente")
+    @Column(name = "titre_oeuvrevente", nullable = false, length = 200)
     public String getTitreOeuvrevente() {
         return titreOeuvrevente;
     }
@@ -36,7 +43,7 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "etat_oeuvrevente")
+    @Column(name = "etat_oeuvrevente", nullable = false, length = 1)
     public String getEtatOeuvrevente() {
         return etatOeuvrevente;
     }
@@ -46,22 +53,26 @@ public class OeuvreventeEntity {
     }
 
     @Basic
-    @Column(name = "prix_oeuvrevente")
+    @Column(name = "prix_oeuvrevente", nullable = false, precision = 0)
     public double getPrixOeuvrevente() {
         return prixOeuvrevente;
+    }
+
+    public void setPrixOeuvrevente(Double prixOeuvrevente) {
+        this.prixOeuvrevente = prixOeuvrevente;
     }
 
     public void setPrixOeuvrevente(double prixOeuvrevente) {
         this.prixOeuvrevente = prixOeuvrevente;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_proprietaire", referencedColumnName="id_proprietaire")
-    public ProprietaireEntity getProprietaire() { return proprietaire; }
-
-    public void setProprietaire(ProprietaireEntity proprietaire) {
-        this.proprietaire = proprietaire;
-    }
+//    @ManyToOne
+//    @JoinColumn(name = "id_proprietaire", referencedColumnName="id_proprietaire")
+//    public ProprietaireEntity getProprietaire() { return proprietaire; }
+//
+//    public void setProprietaire(ProprietaireEntity proprietaire) {
+//        this.proprietaire = proprietaire;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -90,5 +101,34 @@ public class OeuvreventeEntity {
         temp = Double.doubleToLongBits(prixOeuvrevente);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Basic
+    @Column(name = "id_proprietaire", nullable = true, insertable = false, updatable = false)
+    public Integer getIdProprietaire() {
+        return idProprietaire;
+    }
+
+    public void setIdProprietaire(Integer idProprietaire) {
+        this.idProprietaire = idProprietaire;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_proprietaire", referencedColumnName = "id_proprietaire")
+    public ProprietaireEntity getProprietaireByIdProprietaire() {
+        return proprietaireByIdProprietaire;
+    }
+
+    public void setProprietaireByIdProprietaire(ProprietaireEntity proprietaireByIdProprietaire) {
+        this.proprietaireByIdProprietaire = proprietaireByIdProprietaire;
+    }
+
+    @OneToMany(mappedBy = "oeuvreventeByIdOeuvrevente")
+    public Collection<ReservationEntity> getReservationsByIdOeuvrevente() {
+        return reservationsByIdOeuvrevente;
+    }
+
+    public void setReservationsByIdOeuvrevente(Collection<ReservationEntity> reservationsByIdOeuvrevente) {
+        this.reservationsByIdOeuvrevente = reservationsByIdOeuvrevente;
     }
 }

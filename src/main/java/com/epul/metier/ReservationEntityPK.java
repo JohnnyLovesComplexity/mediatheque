@@ -11,7 +11,7 @@ public class ReservationEntityPK implements Serializable {
     private int idOeuvrevente;
     private int idAdherent;
 
-    @Column(name = "id_oeuvrevente", insertable = false, updatable = false)
+    @Column(name = "id_oeuvrevente", nullable = false, insertable = false, updatable = false)
     @Id
     public int getIdOeuvrevente() {
         return idOeuvrevente;
@@ -21,7 +21,7 @@ public class ReservationEntityPK implements Serializable {
         this.idOeuvrevente = idOeuvrevente;
     }
 
-    @Column(name = "id_adherent", insertable = false, updatable = false)
+    @Column(name = "id_adherent", insertable = false, updatable = false, nullable = false)
     @Id
     public int getIdAdherent() {
         return idAdherent;
