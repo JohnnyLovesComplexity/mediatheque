@@ -6,14 +6,10 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
     <!-- Using default handler mapping i.e. BeanNameUrlHandlerMapping i.e. any request with URL  /multiaction/*.htm will be handled by MultiControleur-->
     <!-- InternalPathMethodNameResolver  invokes a method with name same as the last part of request URL excluding the extension -->
-
-    <bean name="/multiaction/*.htm" class="com.epul.controle.MemberController">
-    </bean>
-
-    <bean name="/login/*.htm" class="com.epul.controle.ConnexionController">
-    </bean>
-
-
-
-
+    
+    <bean name="/multiaction/*.htm" class="com.epul.controle.ControleurAdherent"/>
+    
+    <bean name="/oeuvre/*.htm" class="com.epul.controle.ControleurOeuvre"/>
+    
+    <bean name="/login/*.htm" class="com.epul.controle.ConnexionController"/>
 </beans>

@@ -31,8 +31,7 @@ public class ConnexionController {
             String pwd = request.getParameter("pwd");
             String message = "";
             try {
-                ServiceAdherentDAO unServiceAdherentDAO = new ServiceAdherentDAO();
-                UtilisateurEntity unUtilisateur = unServiceAdherentDAO.getUser(login);
+                UtilisateurEntity unUtilisateur = ServiceAdherentDAO.getUtilisateur(login);
                 if (unUtilisateur != null) {
                     try {
                         String pwdmd5 = FonctionsUtiles.md5(pwd);

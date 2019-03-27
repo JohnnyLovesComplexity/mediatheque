@@ -8,7 +8,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "oeuvrepret", schema = "baseoeuvre", catalog = "")
-public class OeuvrepretEntity {
+public class OeuvrepretEntity extends OeuvreEntity {
     private int idOeuvrepret;
     private String titreOeuvrepret;
     private Integer idProprietaire;
@@ -87,5 +87,13 @@ public class OeuvrepretEntity {
 
     public void setProprietaireByIdProprietaire(ProprietaireEntity proprietaireByIdProprietaire) {
         this.proprietaireByIdProprietaire = proprietaireByIdProprietaire;
+    }
+    
+    @Override
+    public String toString() {
+        return "OeuvrepretEntity{" +
+                "idOeuvrepret=" + idOeuvrepret +
+                ", titreOeuvrepret='" + titreOeuvrepret + '\'' +
+                '}';
     }
 }

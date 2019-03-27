@@ -8,7 +8,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "oeuvrevente", schema = "baseoeuvre", catalog = "")
-public class OeuvreventeEntity {
+public class OeuvreventeEntity extends OeuvreEntity {
     private int idOeuvrevente;
     private String titreOeuvrevente;
     private String etatOeuvrevente;
@@ -130,5 +130,15 @@ public class OeuvreventeEntity {
 
     public void setReservationsByIdOeuvrevente(Collection<ReservationEntity> reservationsByIdOeuvrevente) {
         this.reservationsByIdOeuvrevente = reservationsByIdOeuvrevente;
+    }
+    
+    @Override
+    public String toString() {
+        return "OeuvreventeEntity{" +
+                "idOeuvrevente=" + idOeuvrevente +
+                ", titreOeuvrevente='" + titreOeuvrevente + '\'' +
+                ", etatOeuvrevente='" + etatOeuvrevente + '\'' +
+                ", prixOeuvrevente=" + prixOeuvrevente +
+                '}';
     }
 }

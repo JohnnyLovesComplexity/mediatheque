@@ -1,81 +1,66 @@
 package com.epul.dao;
 
 
-import java.util.*;
-
-import com.epul.metier.*;
+import com.epul.meserreurs.MonException;
+import com.epul.metier.AdherentEntity;
+import com.epul.metier.UtilisateurEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import com.epul.meserreurs.*;
 import org.hibernate.Transaction;
 
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 
 public class ServiceAdherentDAO {
 
-    /**
-     * display all members
-     * @return list of all members
-     * @throws MonException
-     */
-	public List<AdherentEntity> displayMemberList() throws MonException {
-		List<AdherentEntity> mesAdherents;
-		String request = "SELECT a FROM AdherentEntity a ORDER BY a.nomAdherent";
-		try {
-
-			Session session = ServiceHibernate.currentSession();
-			TypedQuery<AdherentEntity> query = session.createQuery(request);
-			 mesAdherents = query.getResultList();
-			session.close();
-
+	/* Lister les adherents
+	 * */
+	public static List<AdherentEntity> consulterListeAdherents() throws MonException {
+		List<AdherentEntity> mesAdherents = null;
+		String marequete = "SELECT a FROM AdherentEntity a ORDER BY a.nomAdherent";
+		
+		try (Session session = ServiceHibernate.currentSession()) {
+			TypedQuery<AdherentEntity> query = session.createQuery(marequete);
+			mesAdherents = query.getResultList();
 		} catch (HibernateException ex) {
 			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
 		}
-			return mesAdherents;
-
+		
+		return mesAdherents;
 	}
 
-    /**
-     * get a member by id
-     * @param id
-     * @return member
-     * @throws MonException
-     */
-	public AdherentEntity getMemberById(int id) throws MonException {
+	/* Consultation d'une adherent par son numéro
+	*/
+	public static AdherentEntity adherentById(int numero) throws MonException {
 		List<AdherentEntity> mesAdherents = null;
-		AdherentEntity adherent;
-		String marequete ="SELECT a FROM AdherentEntity a WHERE a.idAdherent="+id;
-		try {
-			Session session = ServiceHibernate.currentSession();
-
+		AdherentEntity adherent = new AdherentEntity();
+		String marequete ="SELECT a FROM AdherentEntity a WHERE a.idAdherent=" + numero;
+		
+		try (Session session = ServiceHibernate.currentSession()) {
 			TypedQuery query =   session.createQuery(marequete);
 			mesAdherents =  query.getResultList();
 			adherent = mesAdherents.get(0);
-			session.close();
 		}
-	 catch (HibernateException ex) {
-		throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
-	}
+		 catch (HibernateException ex) {
+			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
+		}
 
 		return adherent;
 	}
 
-    /**
-     * add a new member
-     * @param unAdh
-     * @throws MonException
-     */
-	public void insertMember(AdherentEntity unAdh) throws MonException
+
+	//  ***************************************
+	//  On ajoute un adhérent à la base
+	//  ***************************************
+	public static void insertAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
-		try {
-			Session   session = ServiceHibernate.currentSession();
+		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			// on transfère le nouvel adhérent à la base
 			session.save(unAdh);
 			tx.commit();
-			session.close();
 		}
 		catch (HibernateException ex) {
 			if (tx != null) {
@@ -87,21 +72,17 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * delete a member
-     * @param unAdh
-     * @throws MonException
-     */
-	public void deleteMember(AdherentEntity unAdh) throws MonException
+	//  ***************************************
+	//  On supprime un adhérent la base
+	//  ***************************************
+	public static void deleteAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
-		try {
-			Session   session = ServiceHibernate.currentSession();
+		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			// on transfère le nouvel adhérent à la base
 			session.delete(unAdh);
 			tx.commit();
-			session.close();
 		}
 		catch (HibernateException ex) {
 			if (tx != null) {
@@ -113,21 +94,17 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * update a member
-      * @param unAdh
-     * @throws MonException
-     */
-	public void updateMember(AdherentEntity unAdh) throws MonException
+	//  ***************************************
+	//  On modifie un adhérent la base
+	//  ***************************************
+	public static void updateAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
-		try {
-			Session   session = ServiceHibernate.currentSession();
+		try (Session   session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
 			// on transfère le nouvel adhérent à la base
 			session.merge(unAdh);
 			tx.commit();
-			session.close();
 		}
 		catch (HibernateException ex) {
 			if (tx != null) {
@@ -139,30 +116,29 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * get  user
-     * @param login
-     * @return user
-     * @throws MonException
-     */
-	public UtilisateurEntity getUser(String login) throws MonException
+
+
+	//  ***************************************
+	//  Authentification
+	//  ***************************************
+
+	public static UtilisateurEntity getUtilisateur(String login) throws MonException
 	{
 		UtilisateurEntity unUtilisateur=null;
-		try {
-			Session session = ServiceHibernate.currentSession();
-
-			TypedQuery query =   session.createNamedQuery("UtilisateurEntity.rechercheNom");
+		try (Session session = ServiceHibernate.currentSession()) {
+			TypedQuery query = session.createNamedQuery("UtilisateurEntity.rechercheNom");
 			query.setParameter("name", login);
 			unUtilisateur = (UtilisateurEntity) query.getSingleResult();
 			if (unUtilisateur == null) {
-				throw new MonException("Utilisateur Inconnu", "Erreur ");
+				new MonException("Utilisateur Inconnu", "Erreur ");
 			}
-			session.close();
-
+		}
+		catch(RuntimeException e)
+		{
+			new MonException("Erreur de lecture", e.getMessage());
 		} catch (Exception e){
-			throw new MonException("Erreur de lecture", e.getMessage());
+			new MonException("Erreur de lecture", e.getMessage());
 		}
 		return unUtilisateur;
 	}
-
 }
