@@ -73,7 +73,7 @@
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
                         <c:if test="{item.etatOeuvrevente != 'R'}">TODO: Put back '$'
-                        <a class="btn btn-info" href="reserverOeuvre.htm?id=${item.idOeuvrepret}"
+                        <a class="btn btn-info" href="reserverOeuvre.htm?id={item.idOeuvrepret}"TODO: Put back '$'
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
                     </td>
