@@ -22,7 +22,7 @@ public class ServiceOeuvreDAO {
 	 * List all the masterpieces (prêt).
 	 * @return A list of the masterpieces.
 	 */
-	public List<OeuvrepretEntity> listOeuvrePret() {
+	public static List<OeuvrepretEntity> listOeuvrePret() {
 		return listOeuvre(OeuvrepretEntity.class, "titreOeuvrepret");
 	}
 	
@@ -30,7 +30,7 @@ public class ServiceOeuvreDAO {
 	 * List all the masterpieces (vente).
 	 * @return A list of the masterpieces.
 	 */
-	public List<OeuvreventeEntity> listOeuvreVente() {
+	public static List<OeuvreventeEntity> listOeuvreVente() {
 		return listOeuvre(OeuvreventeEntity.class, "titreOeuvrevente");
 	}
 	
@@ -42,7 +42,7 @@ public class ServiceOeuvreDAO {
 	 *                         sorted.
 	 * @return A list of the masterpieces.
 	 */
-	private <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
+	private static <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
 		List<T> oeuvres = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o" + (attributeToOrder != null ? " ORDER BY o." + attributeToOrder : "");
 		
@@ -61,7 +61,7 @@ public class ServiceOeuvreDAO {
 	 * @param clazz The class of the generic type `T`.
 	 * @return A list of the masterpieces.
 	 */
-	private <T> List<T> listOeuvre(@NotNull Class<T> clazz) {
+	private static <T> List<T> listOeuvre(@NotNull Class<T> clazz) {
 		return listOeuvre(clazz, null);
 	}
 	
@@ -70,7 +70,7 @@ public class ServiceOeuvreDAO {
 	 * @param id The identifier of the object to fetch.
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
-	public OeuvrepretEntity getOeuvrePretById(int id) {
+	public static OeuvrepretEntity getOeuvrePretById(int id) {
 		return getOeuvreById(id, OeuvrepretEntity.class);
 	}
 	
@@ -79,7 +79,7 @@ public class ServiceOeuvreDAO {
 	 * @param id The identifier of the object to fetch.
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
-	public OeuvreventeEntity getOeuvreVenteById(int id) {
+	public static OeuvreventeEntity getOeuvreVenteById(int id) {
 		return getOeuvreById(id, OeuvreventeEntity.class);
 	}
 	
@@ -90,7 +90,7 @@ public class ServiceOeuvreDAO {
 	 * @param clazz The class of the generic type `T`.
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
-	private <T> T getOeuvreById(int id, @NotNull Class<T> clazz) {
+	private static <T> T getOeuvreById(int id, @NotNull Class<T> clazz) {
 		List<T> oeuvres = null;
 		T oeuvre = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o WHERE o.idAdherent=" + id;
@@ -111,14 +111,14 @@ public class ServiceOeuvreDAO {
 	 * Insert a masterpiece in the database.
 	 * @param oeuvrePret The instance of the masterpiece to add in the database.
 	 */
-	public void insertOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
+	public static void insertOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
 		insertOeuvreT(oeuvrePret);
 	}
 	/**
 	 * Insert a masterpiece in the database.
 	 * @param oeuvreVente The instance of the masterpiece to add in the database.
 	 */
-	public void insertOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
+	public static void insertOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
 		insertOeuvreT(oeuvreVente);
 	}
 	
@@ -127,7 +127,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The instance of the masterpiece to add in the database.
 	 */
-	private <T> void insertOeuvreT(@NotNull T oeuvre) {
+	private static <T> void insertOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
@@ -148,14 +148,14 @@ public class ServiceOeuvreDAO {
 	 * Remove a masterpiece from the database.
 	 * @param oeuvrePret The masterpiece to remove.
 	 */
-	public void deleteOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
+	public static void deleteOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
 		deleteOeuvreT(oeuvrePret);
 	}
 	/**
 	 * Remove a masterpiece from the database.
 	 * @param oeuvreVente The masterpiece to remove.
 	 */
-	public void deleteOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
+	public static void deleteOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
 		deleteOeuvreT(oeuvreVente);
 	}
 	
@@ -164,7 +164,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The masterpiece to remove.
 	 */
-	private <T> void deleteOeuvreT(@NotNull T oeuvre) {
+	private static <T> void deleteOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		
 		try (Session session = ServiceHibernate.currentSession()) {
@@ -187,7 +187,7 @@ public class ServiceOeuvreDAO {
 	 * instance in the database.
 	 * @param oeuvrePret The new instance to update, with the corresponding identifier.
 	 */
-	public void updateOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
+	public static void updateOeuvre(@NotNull OeuvrepretEntity oeuvrePret) {
 		updateOeuvreT(oeuvrePret);
 	}
 	/**
@@ -195,7 +195,7 @@ public class ServiceOeuvreDAO {
 	 * instance in the database.
 	 * @param oeuvreVente The new instance to update, with the corresponding identifier.
 	 */
-	public void updateOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
+	public static void updateOeuvre(@NotNull OeuvreventeEntity oeuvreVente) {
 		updateOeuvreT(oeuvreVente);
 	}
 	
@@ -205,7 +205,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The new instance to update, with the corresponding identifier.
 	 */
-	private <T> void updateOeuvreT(@NotNull T oeuvre) {
+	private static <T> void updateOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		try (Session   session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();

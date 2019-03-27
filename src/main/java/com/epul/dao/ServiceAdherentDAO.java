@@ -14,17 +14,14 @@ import java.util.List;
 
 public class ServiceAdherentDAO {
 
-    /**
-     * display all members
-     * @return list of all members
-     * @throws MonException
-     */
-	public static List<AdherentEntity> displayMemberList() throws MonException {
+	/* Lister les adherents
+	 * */
+	public static List<AdherentEntity> consulterListeAdherents() throws MonException {
 		List<AdherentEntity> mesAdherents = null;
-		String str_query = "SELECT a FROM AdherentEntity a ORDER BY a.nomAdherent";
+		String marequete = "SELECT a FROM AdherentEntity a ORDER BY a.nomAdherent";
 		
 		try (Session session = ServiceHibernate.currentSession()) {
-			TypedQuery<AdherentEntity> query = session.createQuery(str_query);
+			TypedQuery<AdherentEntity> query = session.createQuery(marequete);
 			mesAdherents = query.getResultList();
 		} catch (HibernateException ex) {
 			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
@@ -33,35 +30,31 @@ public class ServiceAdherentDAO {
 		return mesAdherents;
 	}
 
-    /**
-     * get a member by id
-     * @param id
-     * @return member
-     * @throws MonException
-     */
-	public static AdherentEntity getMemberById(int id) throws MonException {
+	/* Consultation d'une adherent par son numéro
+	*/
+	public static AdherentEntity adherentById(int numero) throws MonException {
 		List<AdherentEntity> mesAdherents = null;
 		AdherentEntity adherent = new AdherentEntity();
-		String str_query ="SELECT a FROM AdherentEntity a WHERE a.idAdherent=" + id;
+		String marequete ="SELECT a FROM AdherentEntity a WHERE a.idAdherent=" + numero;
 		
 		try (Session session = ServiceHibernate.currentSession()) {
-			TypedQuery query =   session.createQuery(str_query);
+			TypedQuery query =   session.createQuery(marequete);
 			mesAdherents =  query.getResultList();
 			adherent = mesAdherents.get(0);
 		}
-		catch (HibernateException ex) {
+		 catch (HibernateException ex) {
 			throw new MonException("Impossible d'accèder à la SessionFactory: ",  ex.getMessage());
 		}
-		
+
 		return adherent;
 	}
 
-    /**
-     * add a new member
-     * @param unAdh
-     * @throws MonException
-     */
-	public static void insertMember(AdherentEntity unAdh) throws MonException  {
+
+	//  ***************************************
+	//  On ajoute un adhérent à la base
+	//  ***************************************
+	public static void insertAdherent(AdherentEntity unAdh) throws MonException
+	{
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
@@ -79,12 +72,10 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * delete a member
-     * @param unAdh
-     * @throws MonException
-     */
-	public static void deleteMember(AdherentEntity unAdh) throws MonException
+	//  ***************************************
+	//  On supprime un adhérent la base
+	//  ***************************************
+	public static void deleteAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
@@ -103,12 +94,10 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * update a member
-      * @param unAdh
-     * @throws MonException
-     */
-	public static void updateMember(AdherentEntity unAdh) throws MonException
+	//  ***************************************
+	//  On modifie un adhérent la base
+	//  ***************************************
+	public static void updateAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
 		try (Session   session = ServiceHibernate.currentSession()) {
@@ -127,23 +116,28 @@ public class ServiceAdherentDAO {
 		}
 	}
 
-    /**
-     * get  user
-     * @param login
-     * @return user
-     * @throws MonException
-     */
-	public static UtilisateurEntity getUser(String login) throws MonException {
-		UtilisateurEntity unUtilisateur = null;
+
+
+	//  ***************************************
+	//  Authentification
+	//  ***************************************
+
+	public static UtilisateurEntity getUtilisateur(String login) throws MonException
+	{
+		UtilisateurEntity unUtilisateur=null;
 		try (Session session = ServiceHibernate.currentSession()) {
 			TypedQuery query = session.createNamedQuery("UtilisateurEntity.rechercheNom");
 			query.setParameter("name", login);
 			unUtilisateur = (UtilisateurEntity) query.getSingleResult();
 			if (unUtilisateur == null) {
-				throw new MonException("Utilisateur Inconnu", "Erreur ");
+				new MonException("Utilisateur Inconnu", "Erreur ");
 			}
-		} catch(Exception e) {
-			throw new MonException("Erreur de lecture", e.getMessage());
+		}
+		catch(RuntimeException e)
+		{
+			new MonException("Erreur de lecture", e.getMessage());
+		} catch (Exception e){
+			new MonException("Erreur de lecture", e.getMessage());
 		}
 		return unUtilisateur;
 	}
