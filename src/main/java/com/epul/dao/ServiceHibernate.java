@@ -34,7 +34,7 @@ public class ServiceHibernate {
 				session.set(s);
 			}
 		} catch (HibernateException ex) {
-			throw new ServiceHibernateException("Impossible d'acc�der � la SessionFactory: "
+			throw new ServiceHibernateException("Impossible d'accéder à la SessionFactory: "
 					+ ex.getMessage(), ex);
 		}
 		return s;
