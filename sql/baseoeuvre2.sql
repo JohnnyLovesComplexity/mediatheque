@@ -30,6 +30,6 @@ ALTER TABLE `emprunt`
 -- Contraintes pour la table `emprunt`
 --
 ALTER TABLE `emprunt`
-  ADD CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`id_oeuvrepret`) REFERENCES `id_oeuvrepret` (`id_oeuvrepret`),
+  ADD CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`id_oeuvrepret`) REFERENCES `oeuvrepret` (`id_oeuvrepret`),
   ADD CONSTRAINT `emprunt_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`);
 COMMIT;
