@@ -16,7 +16,7 @@ public class ServiceAdherentDAO {
 
 	/* Lister les adherents
 	 * */
-	public List<AdherentEntity> consulterListeAdherents() throws MonException {
+	public static List<AdherentEntity> consulterListeAdherents() throws MonException {
 		List<AdherentEntity> mesAdherents = null;
 		String marequete = "SELECT a FROM AdherentEntity a ORDER BY a.nomAdherent";
 		
@@ -32,7 +32,7 @@ public class ServiceAdherentDAO {
 
 	/* Consultation d'une adherent par son numéro
 	*/
-	public AdherentEntity adherentById(int numero) throws MonException {
+	public static AdherentEntity adherentById(int numero) throws MonException {
 		List<AdherentEntity> mesAdherents = null;
 		AdherentEntity adherent = new AdherentEntity();
 		String marequete ="SELECT a FROM AdherentEntity a WHERE a.idAdherent=" + numero;
@@ -53,7 +53,7 @@ public class ServiceAdherentDAO {
 	//  ***************************************
 	//  On ajoute un adhérent à la base
 	//  ***************************************
-	public void insertAdherent(AdherentEntity unAdh) throws MonException
+	public static void insertAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
@@ -75,7 +75,7 @@ public class ServiceAdherentDAO {
 	//  ***************************************
 	//  On supprime un adhérent la base
 	//  ***************************************
-	public void deleteAdherent(AdherentEntity unAdh) throws MonException
+	public static void deleteAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
@@ -97,7 +97,7 @@ public class ServiceAdherentDAO {
 	//  ***************************************
 	//  On modifie un adhérent la base
 	//  ***************************************
-	public void updateAdherent(AdherentEntity unAdh) throws MonException
+	public static void updateAdherent(AdherentEntity unAdh) throws MonException
 	{
 		Transaction tx = null;
 		try (Session   session = ServiceHibernate.currentSession()) {
@@ -122,7 +122,7 @@ public class ServiceAdherentDAO {
 	//  Authentification
 	//  ***************************************
 
-	public UtilisateurEntity getUtilisateur( String login) throws MonException
+	public static UtilisateurEntity getUtilisateur(String login) throws MonException
 	{
 		UtilisateurEntity unUtilisateur=null;
 		try (Session session = ServiceHibernate.currentSession()) {

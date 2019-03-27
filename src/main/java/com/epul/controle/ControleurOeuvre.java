@@ -29,10 +29,8 @@ public class ControleurOeuvre {
 		String destination;
 		
 		try {
-			// HttpSession session = request.getSession();
-			ServiceOeuvreDAO service = new ServiceOeuvreDAO();
-			request.setAttribute("oeuvrespret", service.listOeuvrePret());
-			request.setAttribute("oeuvresvente", service.listOeuvreVente());
+			request.setAttribute("oeuvrespret", ServiceOeuvreDAO.listOeuvrePret());
+			request.setAttribute("oeuvresvente", ServiceOeuvreDAO.listOeuvreVente());
 			destination = "vues/listerOeuvres";
 		} catch (MonException e) {
 			request.setAttribute("MesErreurs", e.getMessage());
@@ -85,8 +83,7 @@ public class ControleurOeuvre {
 		try {
 			OeuvrepretEntity oeuvre = new OeuvrepretEntity();
 			oeuvre.setTitreOeuvrepret(request.getParameter("txttitre"));
-			ServiceOeuvreDAO service = new ServiceOeuvreDAO();
-			service.insertOeuvre(oeuvre);
+			ServiceOeuvreDAO.insertOeuvre(oeuvre);
 			destination = "index";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
@@ -114,8 +111,7 @@ public class ControleurOeuvre {
 			oeuvre.setTitreOeuvrevente(request.getParameter("txttitre"));
 			oeuvre.setEtatOeuvrevente(request.getParameter("txtetat"));
 			oeuvre.setPrixOeuvrevente(Double.parseDouble(request.getParameter("prix")));
-			ServiceOeuvreDAO service = new ServiceOeuvreDAO();
-			service.insertOeuvre(oeuvre);
+			ServiceOeuvreDAO.insertOeuvre(oeuvre);
 			destination = "index";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());

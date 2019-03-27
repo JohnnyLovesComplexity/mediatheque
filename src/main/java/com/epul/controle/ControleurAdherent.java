@@ -26,9 +26,7 @@ public class ControleurAdherent {
 	public ModelAndView afficherLesStages(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String destinationPage;
 		try {
-			// HttpSession session = request.getSession();
-			ServiceAdherentDAO unServiceAdherentDAO = new ServiceAdherentDAO();
-			request.setAttribute("mesAdherents", unServiceAdherentDAO.consulterListeAdherents());
+			request.setAttribute("mesAdherents", ServiceAdherentDAO.consulterListeAdherents());
 			destinationPage = "vues/listerAdherent";
 		} catch (MonException e) {
 			request.setAttribute("MesErreurs", e.getMessage());
@@ -47,8 +45,7 @@ public class ControleurAdherent {
 			unAdherent.setNomAdherent(request.getParameter("txtnom"));
 			unAdherent.setPrenomAdherent(request.getParameter("txtprenom"));
 			unAdherent.setVilleAdherent(request.getParameter("txtville"));
-			ServiceAdherentDAO unServiceAdherentDAO = new ServiceAdherentDAO();
-			unServiceAdherentDAO.insertAdherent(unAdherent);
+			ServiceAdherentDAO.insertAdherent(unAdherent);
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destinationPage = "vues/Erreur";
@@ -80,12 +77,12 @@ public class ControleurAdherent {
 	}
 
 	// /
-		// / Affichage de la page d'accueil
-		// /
-		@RequestMapping(value = "/", method = RequestMethod.GET)
-		public ModelAndView Afficheindex2(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			return new ModelAndView("index");
-		}
+	// / Affichage de la page d'accueil
+	// /
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView Afficheindex2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return new ModelAndView("index");
+	}
 	// /
 	// / Affichage de la page d'accueil
 	// /
@@ -93,7 +90,4 @@ public class ControleurAdherent {
 	public ModelAndView AfficheErreur(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return new ModelAndView("vues/Erreur");
 	}
-	
-	
-
 }
