@@ -14,6 +14,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
  <link rel="stylesheet"  type="text/css" href="<c:url value="/resources/css/monStyle.css"/>">
+ <link rel="icon" type="image/png" href="https://www.glyphicons.com/img/glyphicons/basic/2x/glyphicons-basic-422-book-library@2x.png"/>
 
 <script language="JavaScript">
     function fermer() {

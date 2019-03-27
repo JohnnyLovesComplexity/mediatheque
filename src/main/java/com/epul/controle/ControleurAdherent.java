@@ -1,18 +1,17 @@
 package com.epul.controle;
 
 //import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import com.epul.dao.ServiceAdherentDAO;
+import com.epul.meserreurs.MonException;
+import com.epul.metier.AdherentEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import com.epul.dao.ServiceAdherentDAO;
-import com.epul.meserreurs.*;
-import com.epul.metier.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 ///
 /// Les méthode du contrôleur répondent à des sollicitations
