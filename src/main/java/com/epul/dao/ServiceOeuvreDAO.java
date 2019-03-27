@@ -1,6 +1,7 @@
 package com.epul.dao;
 
 import com.epul.meserreurs.MonException;
+import com.epul.metier.OeuvreEntity;
 import com.epul.metier.OeuvrepretEntity;
 import com.epul.metier.OeuvreventeEntity;
 import org.hibernate.HibernateException;
@@ -42,7 +43,7 @@ public class ServiceOeuvreDAO {
 	 *                         sorted.
 	 * @return A list of the masterpieces.
 	 */
-	private static <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
+	private static <T extends OeuvreEntity> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
 		List<T> oeuvres = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o" + (attributeToOrder != null ? " ORDER BY o." + attributeToOrder : "");
 		
@@ -61,7 +62,7 @@ public class ServiceOeuvreDAO {
 	 * @param clazz The class of the generic type `T`.
 	 * @return A list of the masterpieces.
 	 */
-	private static <T> List<T> listOeuvre(@NotNull Class<T> clazz) {
+	private static <T extends OeuvreEntity> List<T> listOeuvre(@NotNull Class<T> clazz) {
 		return listOeuvre(clazz, null);
 	}
 	
@@ -90,7 +91,7 @@ public class ServiceOeuvreDAO {
 	 * @param clazz The class of the generic type `T`.
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
-	private static <T> T getOeuvreById(int id, @NotNull Class<T> clazz) {
+	private static <T extends OeuvreEntity> T getOeuvreById(int id, @NotNull Class<T> clazz) {
 		List<T> oeuvres = null;
 		T oeuvre = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o WHERE o.idAdherent=" + id;
@@ -127,7 +128,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The instance of the masterpiece to add in the database.
 	 */
-	private static <T> void insertOeuvreT(@NotNull T oeuvre) {
+	private static <T extends OeuvreEntity> void insertOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		try (Session session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
@@ -164,7 +165,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The masterpiece to remove.
 	 */
-	private static <T> void deleteOeuvreT(@NotNull T oeuvre) {
+	private static <T extends OeuvreEntity> void deleteOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		
 		try (Session session = ServiceHibernate.currentSession()) {
@@ -205,7 +206,7 @@ public class ServiceOeuvreDAO {
 	 * @param <T> Generic type, must be either `OeuvrepretEntity` or `OeuvreventeEntity`.
 	 * @param oeuvre The new instance to update, with the corresponding identifier.
 	 */
-	private static <T> void updateOeuvreT(@NotNull T oeuvre) {
+	private static <T extends OeuvreEntity> void updateOeuvreT(@NotNull T oeuvre) {
 		Transaction tx = null;
 		try (Session   session = ServiceHibernate.currentSession()) {
 			tx = session.beginTransaction();
