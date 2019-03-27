@@ -64,17 +64,20 @@
             <c:forEach items="${oeuvrespret}" var="item">
                 <tr>
                     <td>${item.titreOeuvrepret}</td>
-                    <td>${item.proprietaire.prenomProprietaire}</td>
-                    <td>${item.proprietaire.nomProprietaire}</td>
+                    <td>{item.proprietaire.prenomProprietaire}</td><!-- TODO: Put back the '$' -->
+                    <td>{item.proprietaire.nomProprietaire}</td><!-- TODO: Put back the '$' -->
+                    <!--
                     <td>
-                        <c:if test="${item.etatOeuvrevente == 'R'}">
+                        <c:if test="{item.etatOeuvrevente == 'R'}">TODO: Put back the '$'
                         <a disabled class="btn btn-info"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
-                        <c:if test="${item.etatOeuvrevente != 'R'}">
+                        <c:if test="{item.etatOeuvrevente != 'R'}">TODO: Put back the '$'
                         <a class="btn btn-info" href="reserverOeuvre.htm?id=${item.idOeuvrepret}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
+                    </td>
+                    -->
                 </tr>
             </c:forEach>
         </table>

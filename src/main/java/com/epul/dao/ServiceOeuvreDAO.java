@@ -45,17 +45,12 @@ public class ServiceOeuvreDAO {
 	private <T> List<T> listOeuvre(@NotNull Class<T> clazz, @Nullable String attributeToOrder) {
 		List<T> oeuvres = null;
 		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o" + (attributeToOrder != null ? " ORDER BY o." + attributeToOrder : "");
-		Session session = null;
 		
-		try {
-			session = ServiceHibernate.currentSession();
+		try (Session session = ServiceHibernate.currentSession()) {
 			TypedQuery<T> query = session.createQuery(rawQuery, clazz);
 			oeuvres = query.getResultList();
 		} catch (HibernateException ex) {
 			throw new MonException("Impossible d'accèder à la SessionFactory: ", ex.getMessage());
-		} finally {
-			if (session != null)
-				session.close();
 		}
 		
 		return oeuvres;
