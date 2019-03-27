@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "oeuvrepret", schema = "baseoeuvre", catalog = "")
-public class OeuvrepretEntity {
+public class OeuvrepretEntity extends OeuvreEntity {
     private int idOeuvrepret;
     private String titreOeuvrepret;
 
@@ -50,5 +50,13 @@ public class OeuvrepretEntity {
         int result = idOeuvrepret;
         result = 31 * result + (titreOeuvrepret != null ? titreOeuvrepret.hashCode() : 0);
         return result;
+    }
+    
+    @Override
+    public String toString() {
+        return "OeuvrepretEntity{" +
+                "idOeuvrepret=" + idOeuvrepret +
+                ", titreOeuvrepret='" + titreOeuvrepret + '\'' +
+                '}';
     }
 }
