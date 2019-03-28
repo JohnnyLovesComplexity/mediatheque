@@ -27,22 +27,24 @@
                 <th class="col-md-4">Nom propriétaire</th>
             </tr>
 
-            <c:forEach items="${oeuvres}" var="item">
+            <c:forEach items="${oeuvresvente}" var="vente">
                 <tr>
-                    <td>${item.titreOeuvrevente}</td>
-                    <td>${item.etatOeuvrevente}</td>
-                    <td>${item.prixOeuvrevente}</td>
-                    <td>${item.proprietaire.prenomProprietaire}</td>
-                    <td>${item.proprietaire.nomProprietaire}</td>
+                    <td>${vente.titreOeuvrevente}</td>
+                    <td>${vente.etatOeuvrevente}</td>
+                    <td>${vente.prixOeuvrevente}</td>
+                    <td>${vente.proprietaireByIdProprietaire.prenomProprietaire}</td>
+                    <td>${vente.proprietaireByIdProprietaire.nomProprietaire}</td>
                     <td>
-                        <c:if test="${item.etatOeuvrevente == 'R'}">
+                        <c:if test="${vente.etatOeuvrevente == 'R'}">
                         <a disabled class="btn btn-info"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
-                        <c:if test="${item.etatOeuvrevente != 'R'}">
-                        <a class="btn btn-info" href="reserverOeuvre.htm?id=${item.idOeuvrevente}"
+                        <c:if test="${vente.etatOeuvrevente != 'R'}">
+                        <a class="btn btn-info" href="reserverOeuvre.htm?id=${vente.idOeuvrevente}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
+                        <a class="btn btn-info" href="modifierOeuvreVente.htm?id=${vente.idOeuvrevente}"
+                           role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
                 </tr>
             </c:forEach>
         </table>
@@ -61,21 +63,23 @@
 
             </tr>
 
-            <c:forEach items="${oeuvrespret}" var="item">
+            <c:forEach items="${oeuvrespret}" var="pret">
                 <tr>
-                    <td>${item.titreOeuvrepret}</td>
-                    <td>{item.proprietaire.prenomProprietaire}</td><!-- TODO: Put back '$' -->
-                    <td>{item.proprietaire.nomProprietaire}</td><!-- TODO: Put back '$' -->
+                    <td>${pret.titreOeuvrepret}</td>
+                    <td>${pret.proprietaireByIdProprietaire.prenomProprietaire}</td>
+                    <td>${pret.proprietaireByIdProprietaire.nomProprietaire}</td>
+                    <td><a class="btn btn-info" href="modifierOeuvrePret.htm?id=${pret.idOeuvrepret}"
+                           role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></td>
                     <!--
                     <td>
-                        <c:if test="{item.etatOeuvrevente == 'R'}">TODO: Put back '$'
-                        <a disabled class="btn btn-info"
-                           role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
-                        </c:if>
-                        <c:if test="{item.etatOeuvrevente != 'R'}">TODO: Put back '$'
-                        <a class="btn btn-info" href="reserverOeuvre.htm?id={item.idOeuvrepret}"TODO: Put back '$'
-                           role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
-                        </c:if>
+                        <%--<c:if test="{item.etatOeuvrevente == 'R'}">TODO: Put back '$'--%>
+                        <%--<a disabled class="btn btn-info"--%>
+                           <%--role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>--%>
+                        <%--</c:if>--%>
+                        <%--<c:if test="{item.etatOeuvrevente != 'R'}">TODO: Put back '$'--%>
+                        <%--<a class="btn btn-info" href="reserverOeuvre.htm?id={item.idOeuvrepret}"TODO: Put back '$'--%>
+                           <%--role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>--%>
+                        <%--</c:if>--%>
                     </td>
                     -->
                 </tr>

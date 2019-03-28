@@ -8,9 +8,9 @@
 </head>
 <body>
 <%@include file="navigation.jsp" %>
-<form method="post" action="updateOeuvrePret.htm?id=${oeuvrePret.idOeuvrepret}">
+<form method="post" action="updateOeuvrePret.htm?id=${oeuvrepret.idOeuvrepret}">
     <div class="col-md-12 well well-md">
-        <h1>Modifier Oeuvre en vente</h1>
+        <h1>Modifier Oeuvre en prêt</h1>
         <div class="row">
             <div class="col-md-12" style="border:none; background-color:transparent; height :20px;">
             </div>
@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txttitre" value="${oreuvrepret.titreOeuvrepret}" id="prenom"
+                <INPUT type="text" name="txttitre" value="${oeuvrepret.titreOeuvrepret}" id="titre"
                        class="form-control" min="0">
             </div>
         </div>
@@ -39,6 +39,21 @@
             <%--<div class="col-md-12" style="border:none; background-color:transparent; height :20px;">--%>
             <%--</div>--%>
         <%--</div>--%>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Propriétaire </label>
+            <div class="col-md-3">
+                <select name="idProprietaire" size="1">
+                    <c:forEach items="${proprietaires}" var="propr">
+                        <%--TODO set default selected value--%>
+                        <option value="${propr.idProprietaire}" selected="${oeuvrepret.idProprietaire == propr.idProprietaire}">${propr.nomProprietaire}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="border:none; background-color:transparent; height :20px;">
+            </div>
+        </div>
 
         <div class="form-group">
             <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-ok"></span>

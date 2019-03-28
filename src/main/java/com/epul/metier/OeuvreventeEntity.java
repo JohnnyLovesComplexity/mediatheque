@@ -13,7 +13,6 @@ public class OeuvreventeEntity extends OeuvreEntity {
     private String titreOeuvrevente;
     private String etatOeuvrevente;
     private double prixOeuvrevente;
-//    private ProprietaireEntity proprietaire;
     private Integer idProprietaire;
     private ProprietaireEntity proprietaireByIdProprietaire;
     private Collection<ReservationEntity> reservationsByIdOeuvrevente;

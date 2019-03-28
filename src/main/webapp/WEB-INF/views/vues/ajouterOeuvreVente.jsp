@@ -4,7 +4,7 @@
 <%@include file="header.jsp" %>
 <body>
 <%@include file="navigation.jsp"%>
-<H1> Ajout d'un adhérent </H1>
+<H1> Ajout une oeuvre en vente </H1>
 <form method="post" action="insererOeuvreVente.htm" onsubmit="return teste()">
     <div class="col-md-12 well well-md">
         <h1>Formulaire de modifications d'oeuvres </h1>
@@ -36,9 +36,9 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Propriétaire </label>
             <div class="col-md-3">
-                <select name="proprietaireid" size="1">
-                    <c:forEach items="${mesProprietaires}" var="item">
-                        <option value="${item.idPropietaire}">${item.nomProprietaire}</option>
+                <select name="idProprietaire" size="1">
+                    <c:forEach items="${proprietaires}" var="propr">
+                        <option value="${propr.idProprietaire}">${propr.nomProprietaire}</option>
                     </c:forEach>
                 </select>
             </div>

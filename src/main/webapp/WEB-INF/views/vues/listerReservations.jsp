@@ -21,11 +21,11 @@
 
             </tr>
 
-            <c:forEach items="${mesReservations}" var="item">
+            <c:forEach items="${mesReservations}" var="vente">
                 <tr>
-                    <td>${item.oeuvrevente.titreOeuvrevente}</td>
-                    <td>${item.adherent.nomAdherent}</td>
-                    <td>${item.date}</td>
+                    <td>${vente.oeuvrevente.titreOeuvrevente}</td>
+                    <td>${vente.adherent.nomAdherent}</td>
+                    <td>${vente.date}</td>
                 </tr>
             </c:forEach>
         </table>

@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="txttitre" value="${oeuvrevente.titreOeuvrevente}" id="prenom"
+                <INPUT type="text" name="txttitre" value="${oeuvrevente.titreOeuvrevente}" id="titre"
                        class="form-control" min="0">
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Prix de l'oeuvre : </label>
             <div class="col-md-3">
-                <INPUT type="text" name="numberprix" value="${oeuvrevente.prixOeuvrevente}" id="ville"
+                <INPUT type="text" name="numberprix" value="${oeuvrevente.prixOeuvrevente}" id="prix"
                        class="form-control" min="0">
             </div>
         </div>
@@ -40,10 +40,29 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Etat de l'oeuvre : </label>
             <div class="col-md-3">
-                <input type="radio" name="etatoeuvre" value="R" checked="${oeuvrevente.etatoeuvreventre} == 'R'"> Réservé <br>
-                <input type="radio" name="etatoeuvre" value="L" checked="${oeuvrevente.etatoeuvreventre} == 'R'"> Libre <br>
+                <%--TODO set default checked value--%>
+                <input type="radio" name="etatoeuvre" value="R" checked="${oeuvrevente.etatOeuvrevente == 'R'}"> Réservé
+                <br>
+                <input type="radio" name="etatoeuvre" value="L" checked="${oeuvrevente.etatOeuvrevente == 'L'}"> Libre
+                <br>
             </div>
 
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="border:none; background-color:transparent; height :20px;">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Propriétaire </label>
+            <div class="col-md-3">
+                <select name="idProprietaire" size="1">
+                    <c:forEach items="${proprietaires}" var="propr">
+                        <%--TODO set default selected value--%>
+                        <option value="${propr.idProprietaire}"
+                                selected="${oeuvrevente.idProprietaire == propr.idProprietaire}">${propr.nomProprietaire}</option>
+                    </c:forEach>
+                </select>
+            </div>
         </div>
 
         <div class="row">
