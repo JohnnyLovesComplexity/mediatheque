@@ -45,7 +45,7 @@
                         </c:if>
                         <a class="btn btn-info" href="modifierOeuvreVente.htm?id=${vente.idOeuvrevente}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
-                        <a onclick="window.confirm('La suppression d\'un adhérent est definitive')"
+                        <a onclick="window.confirm('La suppression d\'une oeuvre est definitive')"
                            class="btn btn-danger" href="supprimerOeuvreVente.htm?id=${vente.idOeuvrevente}"
                            role="button"><span class="glyphicon glyphicon-remove-circle"></span> Supprimer</a>
                 </tr>
@@ -73,7 +73,7 @@
                     <td>${pret.proprietaireByIdProprietaire.nomProprietaire}</td>
                     <td><a class="btn btn-info" href="modifierOeuvrePret.htm?id=${pret.idOeuvrepret}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></td>
-                    <td><a onclick="window.confirm('La suppression d\'un adhérent est definitive')"
+                    <td><a onclick="window.confirm('La suppression d\'une oeuvre est definitive')"
                            class="btn btn-danger" href="supprimerOeuvrePret.htm?id=${pret.idOeuvrepret}"
                            role="button"><span class="glyphicon glyphicon-remove-circle"></span> Supprimer</a></td>
                     <!--
