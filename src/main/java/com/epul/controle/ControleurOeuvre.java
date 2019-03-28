@@ -234,5 +234,40 @@ public class ControleurOeuvre {
 		oeuvre.setIdProprietaire(idProprietaire);
 	}
 
+	@NotNull
+	@RequestMapping("supprimerOeuvreVente")
+	private ModelAndView supprimerOeuvreVente(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("supprimerOeuvrePret")
+	private ModelAndView supprimerOeuvrePret(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
 
 }
