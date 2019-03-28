@@ -57,7 +57,7 @@
                     </ul>
                 </li>
                 
-                <li><a href="javascript:fermer()"><span class="glyphicon glyphicon-log-out"></span> Quitter</a></li>
+                <li><a href="logout.htm"><span class="glyphicon glyphicon-log-out"></span> Quitter</a></li>
                 </c:if>
 
             </ul>

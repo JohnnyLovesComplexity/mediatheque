@@ -22,6 +22,12 @@ public class ConnexionController {
         return new ModelAndView("vues/formLogin");
     }
 
+    @RequestMapping(value = "logout.htm")
+    public ModelAndView logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.setAttribute("id", null);
+        return new ModelAndView("index");
+    }
 
     @RequestMapping(value = "controleLogin.htm")
     public ModelAndView loginControl(HttpServletRequest request) {
