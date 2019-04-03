@@ -19,8 +19,8 @@
             <label class="col-md-3 control-label">Nom de l'adherent : </label>
             <div class="col-md-3">
                 <select name="adherentId" size="1">
-                    <c:forEach items="${mesAdherents}" var="item">
-                        <option value="${item.idAdherent}">${item.nomAdherent}</option>
+                    <c:forEach items="${mesAdherents}" var="vente">
+                        <option value="${vente.idAdherent}">${vente.nomAdherent}</option>
                     </c:forEach>
                 </select>
             </div>

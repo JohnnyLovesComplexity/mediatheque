@@ -67,6 +67,60 @@ public class ControleurAdherent {
 
 		return new ModelAndView(destinationPage);
 	}
+	@RequestMapping(value = "supprimerAdherent.htm")
+	public ModelAndView supprimerAdherent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String destinationPage = "";
+		try {
+			int id = Integer.parseInt(request.getParameter("id"));
+			AdherentEntity adherentEntity = ServiceAdherentDAO.adherentById(id);
+			ServiceAdherentDAO.deleteAdherent(adherentEntity);
+			destinationPage = "redirect:/listerAdherent.htm";
+		} catch (MonException e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destinationPage = "/vues/Erreur";
+		}
+
+		return new ModelAndView(destinationPage);
+	}
+
+	@RequestMapping(value = "updateAdherent.htm")
+	public ModelAndView updateAdherent(HttpServletRequest request,
+									   HttpServletResponse response) throws Exception {
+
+		String destinationPage = "";
+		try {
+			AdherentEntity unAdherent = new AdherentEntity();
+			unAdherent.setIdAdherent(Integer.parseInt(request.getParameter("id")));
+			unAdherent.setNomAdherent(request.getParameter("txtnom"));
+			unAdherent.setPrenomAdherent(request.getParameter("txtprenom"));
+			unAdherent.setVilleAdherent(request.getParameter("txtville"));
+			ServiceAdherentDAO.updateAdherent(unAdherent);
+			destinationPage = "redirect:/listerAdherent.htm";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destinationPage = "vues/Erreur";
+		}
+		return new ModelAndView(destinationPage);
+	}
+
+	@RequestMapping(value = "afficherAdherent.htm")
+	public ModelAndView afficherAdherent(HttpServletRequest request,
+										 HttpServletResponse response) throws Exception {
+
+		String destinationPage = "";
+		try {
+			String id = request.getParameter("id");
+			int intId = Integer.parseInt(id);
+			AdherentEntity unAdherent = ServiceAdherentDAO.adherentById(intId);
+			request.setAttribute("adherent", unAdherent);
+			destinationPage = "vues/modifierAdherent";
+		} catch (MonException e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destinationPage = "vues/Erreur";
+		}
+		return new ModelAndView(destinationPage);
+	}
 
 	// /
 	// / Affichage de la page d'accueil

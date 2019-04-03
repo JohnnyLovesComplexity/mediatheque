@@ -1,9 +1,11 @@
 package com.epul.controle;
 
 import com.epul.dao.ServiceOeuvreDAO;
+import com.epul.dao.ServiceProprietaireDAO;
 import com.epul.meserreurs.MonException;
 import com.epul.metier.OeuvrepretEntity;
 import com.epul.metier.OeuvreventeEntity;
+import com.epul.metier.ProprietaireEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class ControleurOeuvre {
@@ -50,7 +53,9 @@ public class ControleurOeuvre {
 	 */
 	@NotNull
 	@RequestMapping("ajouterOeuvrePret")
-	public ModelAndView ajouterOeuvrePret(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response) {
+	public ModelAndView ajouterOeuvrePret(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		List<ProprietaireEntity> proprietaires = ServiceProprietaireDAO.listProprietaires();
+		request.setAttribute("proprietaires", proprietaires);
 		return new ModelAndView("vues/ajouterOeuvrePret");
 	}
 	
@@ -64,7 +69,9 @@ public class ControleurOeuvre {
 	 */
 	@NotNull
 	@RequestMapping("ajouterOeuvreVente")
-	public ModelAndView ajouterOeuvreVente(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response) {
+	public ModelAndView ajouterOeuvreVente(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		List<ProprietaireEntity> proprietaires = ServiceProprietaireDAO.listProprietaires();
+		request.setAttribute("proprietaires", proprietaires);
 		return new ModelAndView("vues/ajouterOeuvreVente");
 	}
 	
@@ -82,7 +89,7 @@ public class ControleurOeuvre {
 		
 		try {
 			OeuvrepretEntity oeuvre = new OeuvrepretEntity();
-			oeuvre.setTitreOeuvrepret(request.getParameter("txttitre"));
+			extractDataPretFromRequest(request, oeuvre);
 			ServiceOeuvreDAO.insertOeuvre(oeuvre);
 			destination = "index";
 		} catch (Exception e) {
@@ -107,10 +114,8 @@ public class ControleurOeuvre {
 		
 		try {
 			OeuvreventeEntity oeuvre = new OeuvreventeEntity();
-			// TODO: Check the fields name
-			oeuvre.setTitreOeuvrevente(request.getParameter("txttitre"));
-			oeuvre.setEtatOeuvrevente(request.getParameter("txtetat"));
-			oeuvre.setPrixOeuvrevente(Double.parseDouble(request.getParameter("prix")));
+			extractDataVenteFromRequest(request, oeuvre);
+			oeuvre.setEtatOeuvrevente("L");
 			ServiceOeuvreDAO.insertOeuvre(oeuvre);
 			destination = "index";
 		} catch (Exception e) {
@@ -120,4 +125,149 @@ public class ControleurOeuvre {
 		
 		return new ModelAndView(destination);
 	}
+
+	/**
+	 * FRONT function
+	 * @param request The HTTP request, where the function will feed some instances that can be used in the `.jsp` file
+	 * @param response The HTTP response. Not used here by the function.
+	 * @return Return an instance of `ModelAndView` with the require page.
+	 */
+	@NotNull
+	@RequestMapping("modifierOeuvreVente")
+	public ModelAndView modifierOeuvreVente(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			request.setAttribute("oeuvrevente", oeuvre);
+			List<ProprietaireEntity> proprietaires = ServiceProprietaireDAO.listProprietaires();
+			request.setAttribute("proprietaires", proprietaires);
+			destination = "vues/modifierOeuvreVente";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("updateOeuvreVente")
+	public ModelAndView updateOeuvreVente(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre = new OeuvreventeEntity();
+			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			extractDataVenteFromRequest(request, oeuvre);
+			oeuvre.setEtatOeuvrevente(request.getParameter("etatoeuvre"));
+			ServiceOeuvreDAO.updateOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	private void extractDataVenteFromRequest(@NotNull HttpServletRequest request, OeuvreventeEntity oeuvre) {
+		oeuvre.setTitreOeuvrevente(request.getParameter("txttitre"));
+		oeuvre.setPrixOeuvrevente(Double.parseDouble(request.getParameter("numberprix")));
+		int idProprietaire = Integer.parseInt(request.getParameter("idProprietaire"));
+		ProprietaireEntity proprietaireEntity = ServiceProprietaireDAO.proprietaireById(idProprietaire);
+		oeuvre.setProprietaireByIdProprietaire(proprietaireEntity);
+		oeuvre.setIdProprietaire(idProprietaire);
+	}
+
+	/**
+	 * FRONT function
+	 * @param request The HTTP request, where the function will feed some instances that can be used in the `.jsp` file
+	 * @param response The HTTP response. Not used here by the function.
+	 * @return Return an instance of `ModelAndView` with the require page.
+	 */
+	@NotNull
+	@RequestMapping("modifierOeuvrePret")
+	public ModelAndView modifierOeuvrePret(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			request.setAttribute("oeuvrepret", oeuvre);
+			List<ProprietaireEntity> proprietaires = ServiceProprietaireDAO.listProprietaires();
+			request.setAttribute("proprietaires", proprietaires);
+			destination = "vues/modifierOeuvrePret";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("updateOeuvrePret")
+	public ModelAndView updateOeuvrePret(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre = new OeuvrepretEntity();
+			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			extractDataPretFromRequest(request, oeuvre);
+			ServiceOeuvreDAO.updateOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	private void extractDataPretFromRequest(@NotNull HttpServletRequest request, OeuvrepretEntity oeuvre) {
+		oeuvre.setTitreOeuvrepret(request.getParameter("txttitre"));
+		int idProprietaire = Integer.parseInt(request.getParameter("idProprietaire"));
+		ProprietaireEntity proprietaireEntity = ServiceProprietaireDAO.proprietaireById(idProprietaire);
+		oeuvre.setProprietaireByIdProprietaire(proprietaireEntity);
+		oeuvre.setIdProprietaire(idProprietaire);
+	}
+
+	@NotNull
+	@RequestMapping("supprimerOeuvreVente")
+	private ModelAndView supprimerOeuvreVente(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("supprimerOeuvrePret")
+	private ModelAndView supprimerOeuvrePret(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
+			destination = "index";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
 }

@@ -22,15 +22,16 @@
 
 				</tr>
 
-				<c:forEach items="${mesAdherents}" var="item">
+				<c:forEach items="${mesAdherents}" var="vente">
 					<tr>
-						<td>${item.idAdherent}</td>
-						<td>${item.nomAdherent}</td>
-						<td>${item.prenomAdherent}</td>
-						<td>${item.villeAdherent}</td>
-						<td><a class="btn btn-info" href="modifierAdherent.htm?id=${item.idAdherent}" role="button"><span
+						<td>${vente.idAdherent}</td>
+						<td>${vente.nomAdherent}</td>
+						<td>${vente.prenomAdherent}</td>
+						<td>${vente.villeAdherent}</td>
+						<td><a class="btn btn-info" href="afficherAdherent.htm?id=${vente.idAdherent}" role="button"><span
 								class="glyphicon glyphicon-pencil"></span> Modifier</a>
-							<a class="btn btn-danger" href="supprimerAdherent.htm?id=${item.idAdherent}" role="button"><span
+							<a onclick="window.confirm('La suppression d\'un adhérent est definitive')"
+							   class="btn btn-danger" href="supprimerAdherent.htm?id=${vente.idAdherent}" role="button"><span
 									class="glyphicon glyphicon-remove-circle"></span> Supprimer</a></td>
 					</tr>
 				</c:forEach>

@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.TypedQuery;
-import java.io.Closeable;
 import java.util.List;
 
 /**
@@ -72,7 +71,7 @@ public class ServiceOeuvreDAO {
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
 	public static OeuvrepretEntity getOeuvrePretById(int id) {
-		return getOeuvreById(id, OeuvrepretEntity.class);
+		return getOeuvreById(id, OeuvrepretEntity.class, "idOeuvrepret");
 	}
 	
 	/**
@@ -81,7 +80,7 @@ public class ServiceOeuvreDAO {
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
 	public static OeuvreventeEntity getOeuvreVenteById(int id) {
-		return getOeuvreById(id, OeuvreventeEntity.class);
+		return getOeuvreById(id, OeuvreventeEntity.class, "idOeuvrevente");
 	}
 	
 	/**
@@ -91,10 +90,10 @@ public class ServiceOeuvreDAO {
 	 * @param clazz The class of the generic type `T`.
 	 * @return Return the masterpiece associated to `id`, or `null` if not found.
 	 */
-	private static <T extends OeuvreEntity> T getOeuvreById(int id, @NotNull Class<T> clazz) {
+	private static <T extends OeuvreEntity> T getOeuvreById(int id, @NotNull Class<T> clazz, String attributToFilter) {
 		List<T> oeuvres = null;
 		T oeuvre = null;
-		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o WHERE o.idAdherent=" + id;
+		String rawQuery = "SELECT o FROM " + clazz.getSimpleName() + " o WHERE o." + attributToFilter + "=" + id;
 		
 		try (Session session = ServiceHibernate.currentSession()) {
 			TypedQuery<T> query = session.createQuery(rawQuery, clazz);
