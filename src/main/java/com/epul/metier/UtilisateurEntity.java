@@ -14,7 +14,7 @@ public class UtilisateurEntity {
     private String role;
 
     @Id
-    @Column(name = "numutil", nullable = false)
+    @Column(name = "NumUtil", nullable = false)
     public Integer getNumUtil() {
         return numUtil;
     }
@@ -24,7 +24,7 @@ public class UtilisateurEntity {
     }
 
     @Basic
-    @Column(name = "nomutil", nullable = false, length = 100)
+    @Column(name = "NomUtil", nullable = false, length = 100)
     public String getNomUtil() {
         return nomUtil;
     }
@@ -34,7 +34,7 @@ public class UtilisateurEntity {
     }
 
     @Basic
-    @Column(name = "motpasse", nullable = false, length = 100)
+    @Column(name = "MotPasse", nullable = false, length = 100)
     public String getMotPasse() {
         return motPasse;
     }
@@ -56,5 +56,16 @@ public class UtilisateurEntity {
     public int hashCode() {
 
         return Objects.hash(numUtil, nomUtil, motPasse, role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UtilisateurEntity that = (UtilisateurEntity) o;
+        return Objects.equals(numUtil, that.numUtil) &&
+                Objects.equals(nomUtil, that.nomUtil) &&
+                Objects.equals(motPasse, that.motPasse) &&
+                Objects.equals(role, that.role);
     }
 }

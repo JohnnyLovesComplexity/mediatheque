@@ -18,9 +18,13 @@ public class ReservationEntity {
     private AdherentEntity adherentByIdAdherent;
 
     @Id
-    @Column(name = "id_oeuvrevente")
+    @Column(name = "id_oeuvrevente", nullable = false, insertable = false, updatable = false)
     public int getIdOeuvrevente() {
         return idOeuvrevente;
+    }
+
+    public void setIdOeuvrevente(Integer idOeuvrevente) {
+        this.idOeuvrevente = idOeuvrevente;
     }
 
     public void setIdOeuvrevente(int idOeuvrevente) {
@@ -28,9 +32,13 @@ public class ReservationEntity {
     }
 
     @Id
-    @Column(name = "id_adherent", insertable = false, updatable = false)
+    @Column(name = "id_adherent", insertable = false, updatable = false, nullable = false)
     public int getIdAdherent() {
         return idAdherent;
+    }
+
+    public void setIdAdherent(Integer idAdherent) {
+        this.idAdherent = idAdherent;
     }
 
     public void setIdAdherent(int idAdherent) {
@@ -38,7 +46,7 @@ public class ReservationEntity {
     }
 
     @Basic
-    @Column(name = "date_reservation")
+    @Column(name = "date_reservation", nullable = false)
     public Date getDateReservation() {
         return dateReservation;
     }
@@ -48,7 +56,7 @@ public class ReservationEntity {
     }
 
     @Basic
-    @Column(name = "statut")
+    @Column(name = "statut", nullable = false, length = 20)
     public String getStatut() {
         return statut;
     }
