@@ -1,6 +1,28 @@
+* {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+body {
+    background-image: url("../images/desk.jpg");
+}
+
+.home-page {
+    color: white;
+    background-color: transparent !important;
+    font-weight: bold;
+}
+
+.container {
+    width : 100%;
+}
+
+.navbar-inverse {
+    display: flex;
+}
+
 footer {
-    background-color: #f8f8f8;
-    color: grey;
+    background-color: transparent;
+    color: black;
     padding: 15px;
     width: 100%;
     position: fixed;

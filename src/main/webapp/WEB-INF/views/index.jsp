@@ -11,11 +11,12 @@
 <%@include file="vues/header.jsp" %>
 <body>
 <%@include file="vues/navigation.jsp"%>
-<div class="jumbotron text-center">
+<div class="jumbotron text-center home-page">
 
-    <h1>Bienvenue sur la médiathèque de Polytech</h1>
+    <h1>Bienvenue sur Polydiathèque</h1>
+    <h2>La meilleure médiathèque.</h2>
+    <a href="/login.htm">Se connecter</a>
 </div>
-<h2>Sélectionnez dans le menu la fonctionnalité voulue !</h2>
 <%@include file="vues/footer.jsp"%>
 </body>
 </html>
