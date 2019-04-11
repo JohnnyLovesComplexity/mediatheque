@@ -87,7 +87,6 @@ CREATE TABLE `oeuvrepret` (
 -- Dumping data for table `oeuvrepret`
 --
 
-DROP TABLE IF EXISTS `oeuvrepret`;
 INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`) VALUES
 (1, 'Oeuvre en pret 1', 1000),
 (2, 'Oeuvre en pret 2', 1000),
