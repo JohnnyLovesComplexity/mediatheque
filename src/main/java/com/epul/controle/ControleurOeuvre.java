@@ -1,11 +1,11 @@
 package com.epul.controle;
 
+import com.epul.dao.ServiceAdherentDAO;
 import com.epul.dao.ServiceOeuvreDAO;
 import com.epul.dao.ServiceProprietaireDAO;
+import com.epul.dao.ServiceReservationDAO;
 import com.epul.meserreurs.MonException;
-import com.epul.metier.OeuvrepretEntity;
-import com.epul.metier.OeuvreventeEntity;
-import com.epul.metier.ProprietaireEntity;
+import com.epul.metier.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Controller;
@@ -14,11 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class ControleurOeuvre {
-	
+
 	/**
 	 * FRONT function.
 	 * Redirect the user to the list of the masterpieces.
@@ -30,7 +31,7 @@ public class ControleurOeuvre {
 	@RequestMapping("listerOeuvre.htm")
 	public ModelAndView listOeuvre(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
-		
+
 		try {
 			request.setAttribute("oeuvrespret", ServiceOeuvreDAO.listOeuvrePret());
 			request.setAttribute("oeuvresvente", ServiceOeuvreDAO.listOeuvreVente());
@@ -39,10 +40,10 @@ public class ControleurOeuvre {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
 		}
-		
+
 		return new ModelAndView(destination);
 	}
-	
+
 	/**
 	 * FRONT function.
 	 * Redirect the user to the page to add a masterpiece.
@@ -58,7 +59,7 @@ public class ControleurOeuvre {
 		request.setAttribute("proprietaires", proprietaires);
 		return new ModelAndView("vues/ajouterOeuvrePret");
 	}
-	
+
 	/**
 	 * FRONT function.
 	 * Redirect the user to the page to add a masterpiece.
@@ -74,7 +75,7 @@ public class ControleurOeuvre {
 		request.setAttribute("proprietaires", proprietaires);
 		return new ModelAndView("vues/ajouterOeuvreVente");
 	}
-	
+
 	/**
 	 * BACK function.
 	 * Add a masterpiece to the database and redirect the user to the previous page.
@@ -86,7 +87,7 @@ public class ControleurOeuvre {
 	@RequestMapping("insererOeuvrePret")
 	public ModelAndView insererOeuvrePret(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
-		
+
 		try {
 			OeuvrepretEntity oeuvre = new OeuvrepretEntity();
 			extractDataPretFromRequest(request, oeuvre);
@@ -96,10 +97,10 @@ public class ControleurOeuvre {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
 		}
-		
+
 		return new ModelAndView(destination);
 	}
-	
+
 	/**
 	 * BACK function.
 	 * Add a masterpiece to the database and redirect the user to the previous page.
@@ -111,7 +112,7 @@ public class ControleurOeuvre {
 	@RequestMapping("insererOeuvreVente")
 	public ModelAndView insererOeuvreVente(@NotNull HttpServletRequest request, @Nullable HttpServletResponse response) {
 		String destination;
-		
+
 		try {
 			OeuvreventeEntity oeuvre = new OeuvreventeEntity();
 			extractDataVenteFromRequest(request, oeuvre);
@@ -122,7 +123,7 @@ public class ControleurOeuvre {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
 		}
-		
+
 		return new ModelAndView(destination);
 	}
 
@@ -270,4 +271,70 @@ public class ControleurOeuvre {
 		return new ModelAndView(destination);
 	}
 
+	@NotNull
+	@RequestMapping("reserverOeuvreVente")
+	private ModelAndView reserverOeuvreVente(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			List<AdherentEntity> adherents = ServiceAdherentDAO.consulterListeAdherents();
+			request.setAttribute("oeuvre", oeuvre);
+			request.setAttribute("adherents", adherents);
+			destination = "vues/reservationOeuvreVente";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("emprunterOeuvrePret")
+	private ModelAndView emprunterOeuvrePret(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre;
+			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			List<AdherentEntity> adherents = ServiceAdherentDAO.consulterListeAdherents();
+			request.setAttribute("oeuvre", oeuvre);
+			request.setAttribute("adherents", adherents);
+			destination = "vues/empruntOeuvrePret";
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+    @NotNull
+	@RequestMapping("enregistrerReservation")
+	private ModelAndView enregistrerReservation(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvreventeEntity oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+
+			//New reservation
+            ReservationEntity reservation = new ReservationEntity();
+            reservation.setIdOeuvrevente(oeuvre.getIdOeuvrevente());
+            reservation.setIdAdherent(Integer.parseInt(request.getParameter("adherentId")));
+            reservation.setDateReservation((java.sql.Date) new Date());
+			ServiceReservationDAO.insertReservation(reservation);
+
+            //TODO add status logic
+
+            destination = "vues/reservationOeuvreVente";
+
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
 }

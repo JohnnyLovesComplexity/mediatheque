@@ -4,28 +4,17 @@
 <%@include file="header.jsp" %>
 <html>
 <head>
-    <title>Réservation oeuvre</title>
+    <title>Emprunt oeuvre</title>
 </head>
 <body>
 <%@include file="navigation.jsp"%>
-<form method="post" action="enregistrerReservation.htm?id=${oeuvre.idOeuvrevente}">
+<form method="post" action="enregistrerEmprunt.htm?id=${oeuvre.idOeuvrepret}">
     <div class="col-md-12 well well-md">
-        <h1>Réserver Oeuvre ${oeuvre.titreOeuvrevente}</h1>
+        <h1>Réserver Oeuvre ${oeuvre.titreOeuvrepret}</h1>
         <div class="form-group">
             <label class="col-md-3 control-label">Titre de l'oeuvre : </label>
             <div class="col-md-3">
-                <input disabled type="text" name="txttitre" value="${oeuvre.titreOeuvrevente}" id="titre" class="form-control">
-            </div>
-
-        </div>
-        <div class="row" >
-            <div class="col-md-12" style ="border:none; background-color:transparent; height :20px;">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">Prix de l'oeuvre : </label>
-            <div class="col-md-3">
-                <input disabled type="text" name="txtprix" value="${oeuvre.prixOeuvrevente}" id="prix" class="form-control">
+                <input disabled type="text" name="txttitre" value="${oeuvre.titreOeuvrepret}" id="titre" class="form-control">
             </div>
 
         </div>
@@ -50,7 +39,7 @@
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-ok"></span>
-                Réserver
+                Emprunter
             </button>
 
             <button type="button" class="btn btn-default btn-primary"
