@@ -14,9 +14,11 @@ public class OeuvrepretEntity extends OeuvreEntity {
     private Integer idProprietaire;
     private Collection<EmpruntEntity> empruntsByIdOeuvrepret;
     private ProprietaireEntity proprietaireByIdProprietaire;
+    private String etatOeuvrepret;
 
+    @Basic
     @Id
-    @Column(name = "id_oeuvrepret", nullable = false)
+    @Column(name = "id_oeuvrepret", nullable = false, insertable = false, updatable = false)
     public int getIdOeuvrepret() {
         return idOeuvrepret;
     }
@@ -84,16 +86,26 @@ public class OeuvrepretEntity extends OeuvreEntity {
     public ProprietaireEntity getProprietaireByIdProprietaire() {
         return proprietaireByIdProprietaire;
     }
-
+    
     public void setProprietaireByIdProprietaire(ProprietaireEntity proprietaireByIdProprietaire) {
         this.proprietaireByIdProprietaire = proprietaireByIdProprietaire;
     }
-    
+
     @Override
     public String toString() {
         return "OeuvrepretEntity{" +
                 "idOeuvrepret=" + idOeuvrepret +
                 ", titreOeuvrepret='" + titreOeuvrepret + '\'' +
                 '}';
+    }
+
+    @Basic
+    @Column(name = "etat_oeuvrepret", nullable = true, length = 1)
+    public String getEtatOeuvrepret() {
+        return etatOeuvrepret;
+    }
+
+    public void setEtatOeuvrepret(String etatOeuvrepret) {
+        this.etatOeuvrepret = etatOeuvrepret;
     }
 }
