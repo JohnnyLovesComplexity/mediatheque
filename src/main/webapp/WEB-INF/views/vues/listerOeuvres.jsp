@@ -36,18 +36,22 @@
                     <td>${vente.proprietaireByIdProprietaire.nomProprietaire}</td>
                     <td>
                         <c:if test="${vente.etatOeuvrevente == 'R'}">
-                        <a disabled class="btn btn-info"
-                           role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
+                            <a disabled class="btn btn-info"
+                               role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
                         </c:if>
                         <c:if test="${vente.etatOeuvrevente != 'R'}">
-                        <a class="btn btn-info" href="reserverOeuvre.htm?id=${vente.idOeuvrevente}"
-                           role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
-                        </c:if>
+                            <a class="btn btn-info" href="reserverOeuvreVente.htm?id=${vente.idOeuvrevente}"
+                               role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
+                        </c:if></td>
+                    <td>
                         <a class="btn btn-info" href="modifierOeuvreVente.htm?id=${vente.idOeuvrevente}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a>
+                    </td>
+                    <td>
                         <a onclick="window.confirm('La suppression d\'une oeuvre est definitive')"
                            class="btn btn-danger" href="supprimerOeuvreVente.htm?id=${vente.idOeuvrevente}"
                            role="button"><span class="glyphicon glyphicon-remove-circle"></span> Supprimer</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
@@ -71,23 +75,20 @@
                     <td>${pret.titreOeuvrepret}</td>
                     <td>${pret.proprietaireByIdProprietaire.prenomProprietaire}</td>
                     <td>${pret.proprietaireByIdProprietaire.nomProprietaire}</td>
+                    <td>
+                        <c:if test="${pret.etatOeuvrepret == 'R'}">
+                            <a disabled class="btn btn-info"
+                               role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
+                        </c:if>
+                        <c:if test="${pret.etatOeuvrepret != 'R'}">
+                            <a class="btn btn-info" href="emprunterOeuvrePret.htm?id=${pret.idOeuvrepret}"
+                               role="button"><span class="glyphicon glyphicon-pencil"></span> Emprunter</a>
+                        </c:if></td>
                     <td><a class="btn btn-info" href="modifierOeuvrePret.htm?id=${pret.idOeuvrepret}"
                            role="button"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></td>
                     <td><a onclick="window.confirm('La suppression d\'une oeuvre est definitive')"
                            class="btn btn-danger" href="supprimerOeuvrePret.htm?id=${pret.idOeuvrepret}"
                            role="button"><span class="glyphicon glyphicon-remove-circle"></span> Supprimer</a></td>
-                    <!--
-                    <td>
-                        <%--<c:if test="{item.etatOeuvrevente == 'R'}">TODO: Put back '$'--%>
-                        <%--<a disabled class="btn btn-info"--%>
-                           <%--role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>--%>
-                        <%--</c:if>--%>
-                        <%--<c:if test="{item.etatOeuvrevente != 'R'}">TODO: Put back '$'--%>
-                        <%--<a class="btn btn-info" href="reserverOeuvre.htm?id={item.idOeuvrepret}"TODO: Put back '$'--%>
-                           <%--role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>--%>
-                        <%--</c:if>--%>
-                    </td>
-                    -->
                 </tr>
             </c:forEach>
         </table>

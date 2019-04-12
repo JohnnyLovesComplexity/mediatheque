@@ -11,9 +11,10 @@ public class EmpruntEntity {
     private Integer idOeuvrepret;
     private Integer idAdherent;
     private Date dateReservation;
-    private String statut;
     private OeuvrepretEntity oeuvrepretByIdOeuvrepret;
     private AdherentEntity adherentByIdAdherent;
+    private Integer idStatut;
+    private StatusEntity statusByIdStatut;
 
     @Id
     @Column(name = "id_oeuvrepret", nullable = false, insertable = false, updatable = false)
@@ -45,16 +46,6 @@ public class EmpruntEntity {
         this.dateReservation = dateReservation;
     }
 
-    @Basic
-    @Column(name = "statut", nullable = false, length = 20)
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,13 +53,12 @@ public class EmpruntEntity {
         EmpruntEntity that = (EmpruntEntity) o;
         return Objects.equals(idOeuvrepret, that.idOeuvrepret) &&
                 Objects.equals(idAdherent, that.idAdherent) &&
-                Objects.equals(dateReservation, that.dateReservation) &&
-                Objects.equals(statut, that.statut);
+                Objects.equals(dateReservation, that.dateReservation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idOeuvrepret, idAdherent, dateReservation, statut);
+        return Objects.hash(idOeuvrepret, idAdherent, dateReservation);
     }
 
     @ManyToOne
@@ -89,5 +79,25 @@ public class EmpruntEntity {
 
     public void setAdherentByIdAdherent(AdherentEntity adherentByIdAdherent) {
         this.adherentByIdAdherent = adherentByIdAdherent;
+    }
+
+    @Basic
+    @Column(name = "id_statut", nullable = false, insertable = false, updatable = false)
+    public Integer getIdStatut() {
+        return idStatut;
+    }
+
+    public void setIdStatut(Integer idStatut) {
+        this.idStatut = idStatut;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_statut", referencedColumnName = "id", nullable = false)
+    public StatusEntity getStatusByIdStatut() {
+        return statusByIdStatut;
+    }
+
+    public void setStatusByIdStatut(StatusEntity statusByIdStatut) {
+        this.statusByIdStatut = statusByIdStatut;
     }
 }

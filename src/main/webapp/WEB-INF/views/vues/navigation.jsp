@@ -30,6 +30,19 @@
                         <li><a href="listerAdherent.htm"><span class="glyphicon glyphicon-th-list"></span> Lister les adhérents</a></li>
                     </ul>
                 </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="glyphicon glyphicon-credit-card"></span>
+                        Gestion
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="listerEmprunts.htm"> <span class="glyphicon glyphicon-th-list"></span> Emprunts </a></li>
+                        <li><a href="listerReservations.htm"><span class="glyphicon glyphicon-th-list"></span> Réservations</a></li>
+                    </ul>
+                </li>
                 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">

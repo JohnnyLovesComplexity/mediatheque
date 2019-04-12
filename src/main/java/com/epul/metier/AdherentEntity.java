@@ -17,7 +17,7 @@ public class AdherentEntity {
     private Collection<ReservationEntity> reservationsByIdAdherent;
 
     @Id
-    @Column(name = "id_adherent", nullable = false)
+    @Column(name = "id_adherent", nullable = false, insertable = false, updatable = false)
     public int getIdAdherent() {
         return idAdherent;
     }
