@@ -2,10 +2,10 @@
 -- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 03, 2019 at 09:42 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.3.1
+-- Hôte : 127.0.0.1
+-- Généré le :  ven. 12 avr. 2019 à 13:59
+-- Version du serveur :  10.1.37-MariaDB
+-- Version de PHP :  7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,16 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `baseoeuvre`
+-- Base de données :  `baseoeuvre`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adherent`
+-- Structure de la table `adherent`
 --
 
-DROP TABLE IF EXISTS `adherent`;
 CREATE TABLE `adherent` (
   `id_adherent` int(10) UNSIGNED NOT NULL,
   `nom_adherent` varchar(100) NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE `adherent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `adherent`
+-- Déchargement des données de la table `adherent`
 --
 
 INSERT INTO `adherent` (`id_adherent`, `nom_adherent`, `prenom_adherent`, `ville_adherent`) VALUES
@@ -59,46 +58,47 @@ INSERT INTO `adherent` (`id_adherent`, `nom_adherent`, `prenom_adherent`, `ville
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emprunt`
+-- Structure de la table `emprunt`
 --
 
-DROP TABLE IF EXISTS `emprunt`;
 CREATE TABLE `emprunt` (
   `id_oeuvrepret` int(10) UNSIGNED NOT NULL,
   `id_adherent` int(10) UNSIGNED NOT NULL,
   `date_reservation` date NOT NULL,
-  `statut` varchar(20) NOT NULL
+  `id_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `emprunt` (`id_oeuvrepret`, `id_adherent`, `date_reservation`, `id_statut`) VALUES ('3', '16', '2019-04-02', '1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oeuvrepret`
+-- Structure de la table `oeuvrepret`
 --
 
-DROP TABLE IF EXISTS `oeuvrepret`;
 CREATE TABLE `oeuvrepret` (
   `id_oeuvrepret` int(10) UNSIGNED NOT NULL,
   `titre_oeuvrepret` varchar(200) NOT NULL,
-  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL
+  `id_proprietaire` int(10) UNSIGNED DEFAULT NULL,
+  `etat_oeuvrepret` varchar(1) DEFAULT 'L'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `oeuvrepret`
+-- Déchargement des données de la table `oeuvrepret`
 --
 
-INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`) VALUES
-(1, 'Oeuvre en pret 1', 1000),
-(2, 'Oeuvre en pret 2', 1000),
-(3, 'TEST', 1000);
+INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`, `etat_oeuvrepret`) VALUES
+(1, 'Oeuvre en pret 1', 1000, 'L'),
+(2, 'Oeuvre en pret 2', 1000, 'L'),
+(3, 'TEST', 1000, 'L');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oeuvrevente`
+-- Structure de la table `oeuvrevente`
 --
 
-DROP TABLE IF EXISTS `oeuvrevente`;
 CREATE TABLE `oeuvrevente` (
   `id_oeuvrevente` int(10) UNSIGNED NOT NULL,
   `titre_oeuvrevente` varchar(200) NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE `oeuvrevente` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `oeuvrevente`
+-- Déchargement des données de la table `oeuvrevente`
 --
 
 INSERT INTO `oeuvrevente` (`id_oeuvrevente`, `titre_oeuvrevente`, `etat_oeuvrevente`, `prix_oeuvrevente`, `id_proprietaire`) VALUES
@@ -124,10 +124,9 @@ INSERT INTO `oeuvrevente` (`id_oeuvrevente`, `titre_oeuvrevente`, `etat_oeuvreve
 -- --------------------------------------------------------
 
 --
--- Table structure for table `proprietaire`
+-- Structure de la table `proprietaire`
 --
 
-DROP TABLE IF EXISTS `proprietaire`;
 CREATE TABLE `proprietaire` (
   `id_proprietaire` int(10) UNSIGNED NOT NULL,
   `nom_proprietaire` varchar(100) CHARACTER SET latin1 NOT NULL,
@@ -135,7 +134,7 @@ CREATE TABLE `proprietaire` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `proprietaire`
+-- Déchargement des données de la table `proprietaire`
 --
 
 INSERT INTO `proprietaire` (`id_proprietaire`, `nom_proprietaire`, `prenom_proprietaire`) VALUES
@@ -146,10 +145,9 @@ INSERT INTO `proprietaire` (`id_proprietaire`, `nom_proprietaire`, `prenom_propr
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reservation`
+-- Structure de la table `reservation`
 --
 
-DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE `reservation` (
   `id_oeuvrevente` int(10) UNSIGNED NOT NULL,
   `id_adherent` int(10) UNSIGNED NOT NULL,
@@ -158,7 +156,7 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `reservation`
+-- Déchargement des données de la table `reservation`
 --
 
 INSERT INTO `reservation` (`id_oeuvrevente`, `id_adherent`, `date_reservation`, `statut`) VALUES
@@ -171,17 +169,16 @@ INSERT INTO `reservation` (`id_oeuvrevente`, `id_adherent`, `date_reservation`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `status`
+-- Structure de la table `status`
 --
 
-DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `status`
+-- Déchargement des données de la table `status`
 --
 
 INSERT INTO `status` (`id`, `name`) VALUES
@@ -192,10 +189,9 @@ INSERT INTO `status` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `utilisateur`
+-- Structure de la table `utilisateur`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE `utilisateur` (
   `NumUtil` int(11) NOT NULL,
   `NomUtil` varchar(100) COLLATE utf8_bin NOT NULL,
@@ -204,7 +200,7 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `utilisateur`
+-- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`NumUtil`, `NomUtil`, `MotPasse`, `role`) VALUES
@@ -213,127 +209,127 @@ INSERT INTO `utilisateur` (`NumUtil`, `NomUtil`, `MotPasse`, `role`) VALUES
 (3, 'Pinot', '5ebe2294ecd0e0f08eab7690d2a6ee69', 'visiteur');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables déchargées
 --
 
 --
--- Indexes for table `adherent`
+-- Index pour la table `adherent`
 --
 ALTER TABLE `adherent`
   ADD PRIMARY KEY (`id_adherent`);
 
 --
--- Indexes for table `emprunt`
+-- Index pour la table `emprunt`
 --
 ALTER TABLE `emprunt`
   ADD PRIMARY KEY (`id_oeuvrepret`,`id_adherent`),
-  ADD KEY `id_adherent` (`id_adherent`);
+  ADD KEY `id_adherent` (`id_adherent`),
+  ADD KEY `emprunt_ibfk_3` (`id_statut`);
 
 --
--- Indexes for table `oeuvrepret`
+-- Index pour la table `oeuvrepret`
 --
 ALTER TABLE `oeuvrepret`
   ADD PRIMARY KEY (`id_oeuvrepret`),
   ADD KEY `id_proprietaire` (`id_proprietaire`);
 
 --
--- Indexes for table `oeuvrevente`
+-- Index pour la table `oeuvrevente`
 --
 ALTER TABLE `oeuvrevente`
   ADD PRIMARY KEY (`id_oeuvrevente`),
   ADD KEY `id_proprietaire` (`id_proprietaire`);
 
 --
--- Indexes for table `proprietaire`
+-- Index pour la table `proprietaire`
 --
 ALTER TABLE `proprietaire`
   ADD PRIMARY KEY (`id_proprietaire`);
 
 --
--- Indexes for table `reservation`
+-- Index pour la table `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id_oeuvrevente`,`id_adherent`),
   ADD KEY `id_adherent` (`id_adherent`);
 
 --
--- Indexes for table `status`
+-- Index pour la table `status`
 --
 ALTER TABLE `status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `utilisateur`
+-- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
   ADD PRIMARY KEY (`NumUtil`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT for table `adherent`
+-- AUTO_INCREMENT pour la table `adherent`
 --
 ALTER TABLE `adherent`
   MODIFY `id_adherent` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `oeuvrepret`
+-- AUTO_INCREMENT pour la table `oeuvrepret`
 --
 ALTER TABLE `oeuvrepret`
   MODIFY `id_oeuvrepret` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `oeuvrevente`
+-- AUTO_INCREMENT pour la table `oeuvrevente`
 --
 ALTER TABLE `oeuvrevente`
   MODIFY `id_oeuvrevente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10008;
 
 --
--- AUTO_INCREMENT for table `proprietaire`
+-- AUTO_INCREMENT pour la table `proprietaire`
 --
 ALTER TABLE `proprietaire`
   MODIFY `id_proprietaire` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
 
 --
--- AUTO_INCREMENT for table `status`
+-- AUTO_INCREMENT pour la table `status`
 --
 ALTER TABLE `status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Contraintes pour les tables déchargées
 --
 
 --
--- Constraints for table `emprunt`
+-- Contraintes pour la table `emprunt`
 --
 ALTER TABLE `emprunt`
   ADD CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`id_oeuvrepret`) REFERENCES `oeuvrepret` (`id_oeuvrepret`),
-  ADD CONSTRAINT `emprunt_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`);
+  ADD CONSTRAINT `emprunt_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`),
+  ADD CONSTRAINT `emprunt_ibfk_3` FOREIGN KEY (`id_statut`) REFERENCES `status` (`id`);
 
 --
--- Constraints for table `oeuvrepret`
+-- Contraintes pour la table `oeuvrepret`
 --
 ALTER TABLE `oeuvrepret`
   ADD CONSTRAINT `oeuvrepret_ibfk_1` FOREIGN KEY (`id_proprietaire`) REFERENCES `proprietaire` (`id_proprietaire`);
 
 --
--- Constraints for table `oeuvrevente`
+-- Contraintes pour la table `oeuvrevente`
 --
 ALTER TABLE `oeuvrevente`
   ADD CONSTRAINT `oeuvrevente_ibfk_1` FOREIGN KEY (`id_proprietaire`) REFERENCES `proprietaire` (`id_proprietaire`);
 
 --
--- Constraints for table `reservation`
+-- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`id_oeuvrevente`) REFERENCES `oeuvrevente` (`id_oeuvrevente`),
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`id_adherent`) REFERENCES `adherent` (`id_adherent`);
 COMMIT;
-
-ALTER TABLE `oeuvrepret` ADD `etat_oeuvrepret` VARCHAR(1) NULL DEFAULT 'L' AFTER `id_proprietaire`;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
