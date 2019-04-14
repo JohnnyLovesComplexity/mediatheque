@@ -67,6 +67,7 @@
                 <th class="col-md-1">Titre</th>
                 <th class="col-md-4">Prénom propriétaire</th>
                 <th class="col-md-4">Nom propriétaire</th>
+                <th class="col-md-4">Etat</th>
 
             </tr>
 
@@ -75,6 +76,7 @@
                     <td>${pret.titreOeuvrepret}</td>
                     <td>${pret.proprietaireByIdProprietaire.prenomProprietaire}</td>
                     <td>${pret.proprietaireByIdProprietaire.nomProprietaire}</td>
+                    <td>${pret.etatOeuvrepret}</td>
                     <td>
                         <c:if test="${pret.etatOeuvrepret == 'R'}">
                             <a disabled class="btn btn-info"

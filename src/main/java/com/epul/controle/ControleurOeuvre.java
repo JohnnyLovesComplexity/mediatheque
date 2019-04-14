@@ -1,9 +1,6 @@
 package com.epul.controle;
 
-import com.epul.dao.ServiceAdherentDAO;
-import com.epul.dao.ServiceOeuvreDAO;
-import com.epul.dao.ServiceProprietaireDAO;
-import com.epul.dao.ServiceReservationDAO;
+import com.epul.dao.*;
 import com.epul.meserreurs.MonException;
 import com.epul.metier.*;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -323,12 +319,40 @@ public class ControleurOeuvre {
             ReservationEntity reservation = new ReservationEntity();
             reservation.setIdOeuvrevente(oeuvre.getIdOeuvrevente());
             reservation.setIdAdherent(Integer.parseInt(request.getParameter("adherentId")));
-            reservation.setDateReservation((java.sql.Date) new Date());
+            reservation.setStatut("En attente");
+			reservation.setDateReservation(new java.sql.Date(new java.util.Date().getTime()));
 			ServiceReservationDAO.insertReservation(reservation);
 
             //TODO add status logic
 
-            destination = "vues/reservationOeuvreVente";
+            destination = "vues/listerOeuvres";
+
+		} catch (Exception e) {
+			request.setAttribute("MesErreurs", e.getMessage());
+			destination = "vues/Erreur";
+		}
+
+		return new ModelAndView(destination);
+	}
+
+	@NotNull
+	@RequestMapping("enregistrerEmprunt")
+	private ModelAndView enregistrerEmprunt(@NotNull HttpServletRequest request){
+		String destination;
+
+		try {
+			OeuvrepretEntity oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			//New reservation
+            EmpruntEntity emprunt = new EmpruntEntity();
+            emprunt.setIdOeuvrepret(oeuvre.getIdOeuvrepret());
+            emprunt.setIdAdherent(Integer.parseInt(request.getParameter("adherentId")));
+            emprunt.setIdStatut(1);
+            emprunt.setDateReservation(new java.sql.Date(new java.util.Date().getTime()));
+
+			ServiceEmpruntDAO.insertEmprunt(emprunt);
+			oeuvre.setEtatOeuvrepret("R");
+			ServiceOeuvreDAO.updateOeuvre(oeuvre);
+            destination = "vues/listerOeuvres";
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
