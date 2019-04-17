@@ -87,8 +87,9 @@ public class ControleurOeuvre {
 		try {
 			OeuvrepretEntity oeuvre = new OeuvrepretEntity();
 			extractDataPretFromRequest(request, oeuvre);
+			oeuvre.setEtatOeuvrepret("L");
 			ServiceOeuvreDAO.insertOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -114,7 +115,7 @@ public class ControleurOeuvre {
 			extractDataVenteFromRequest(request, oeuvre);
 			oeuvre.setEtatOeuvrevente("L");
 			ServiceOeuvreDAO.insertOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -160,7 +161,7 @@ public class ControleurOeuvre {
 			extractDataVenteFromRequest(request, oeuvre);
 			oeuvre.setEtatOeuvrevente(request.getParameter("etatoeuvre"));
 			ServiceOeuvreDAO.updateOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -214,7 +215,7 @@ public class ControleurOeuvre {
 			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
 			extractDataPretFromRequest(request, oeuvre);
 			ServiceOeuvreDAO.updateOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -240,7 +241,7 @@ public class ControleurOeuvre {
 			OeuvreventeEntity oeuvre;
 			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -258,7 +259,7 @@ public class ControleurOeuvre {
 			OeuvrepretEntity oeuvre;
 			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
-			destination = "index";
+			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
@@ -326,10 +327,7 @@ public class ControleurOeuvre {
 			oeuvre.setEtatOeuvrevente("R");
 			ServiceOeuvreDAO.updateOeuvre(oeuvre);
 
-			request.setAttribute("oeuvrespret", ServiceOeuvreDAO.listOeuvrePret());
-			request.setAttribute("oeuvresvente", ServiceOeuvreDAO.listOeuvreVente());
-
-            destination = "vues/listerOeuvres";
+			destination = "redirect:/listerOeuvre.htm";
 
 		} catch (Exception e) {
 			request.setAttribute("MesErreurs", e.getMessage());

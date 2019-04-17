@@ -2,17 +2,14 @@
          pageEncoding="UTF-8"%>
 
 <%@include file="header.jsp" %>
-<body>
+<body class="liste">
 <%@include file="navigation.jsp"%>
 <div class="jumbotron text-center">
-    <h1>Listing des Emprunts</h1>
+  <h1>Liste des emprunts</h1>
 </div>
 
 <div class="container">
-    <a class="btn btn-secondary" href="index.htm" role="button"><span class="glyphicon glyphicon-menu-left"></span> Retour accueil</a>
-    <h2>Tableau des Emprunts</h2>
     <div class="container">
-        <h3>Liste des Emprunts</h3>
         <table class="table table-hover">
             <tr>
                 <th class="col-md-1">Oeuvre</th>
@@ -40,7 +37,6 @@
         </table>
     </div>
 </div>
-<%@include file="footer.jsp"%>
 </body>
 
 </html>
