@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -246,9 +247,12 @@ public class ControleurOeuvre {
 			for (int i = 0; i < reservations.size(); i++) {
 				if (reservations.get(i).getIdOeuvrevente() == oeuvre.getIdOeuvrevente()) {
 					System.out.println("supprimerOeuvreVente> Delete reservation: " + reservations.get(i));
-					ServiceReservationDAO.deleteReservation(reservations.get(i--));
+					ServiceReservationDAO.deleteReservation(reservations.get(i));
+					reservations.remove(i--);
 				}
 			}
+			
+			System.out.println("supprimerOeuvreVente> Fin");
 			
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
 			destination = "redirect:/listerOeuvre.htm";
@@ -269,17 +273,26 @@ public class ControleurOeuvre {
 			OeuvrepretEntity oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
 			
 			// Check if the masterpiece is reserved or acquired
-			List<EmpruntEntity> emprunts = ServiceEmpruntDAO.consulterListeEmprunts();
+			ArrayList<EmpruntEntity> emprunts = new ArrayList<>(ServiceEmpruntDAO.consulterListeEmprunts());
 			for (int i = 0; i < emprunts.size(); i++) {
 				if (emprunts.get(i).getIdOeuvrepret() == oeuvre.getIdOeuvrepret()) {
 					System.out.println("supprimerOeuvrePret> Delete emprunt: " + emprunts.get(i));
-					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i--));
+					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i));
+					try {
+						emprunts.remove(i--);
+					} catch (ArrayIndexOutOfBoundsException e) {
+						e.printStackTrace();
+						System.out.println("supprimerOeuvrePret> emprunts.size() = " + emprunts.size() + "\ti = " + i);
+					}
 				}
 			}
+			
+			System.out.println("supprimerOeuvrePret> Fin");
 			
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
 			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
 		}
@@ -300,6 +313,7 @@ public class ControleurOeuvre {
 			request.setAttribute("adherents", adherents);
 			destination = "vues/reservationOeuvreVente";
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("MesErreurs", e.getMessage());
 			destination = "vues/Erreur";
 		}

@@ -85,20 +85,25 @@ public class ControleurAdherent {
 			for (int i = 0; i < reservations.size(); i++) {
 				if (reservations.get(i).getIdAdherent() == adherentEntity.getIdAdherent()) {
 					System.out.println("supprimerAdherent> Delete reservation: " + reservations.get(i));
-					ServiceReservationDAO.deleteReservation(reservations.get(i--));
+					ServiceReservationDAO.deleteReservation(reservations.get(i));
+					reservations.remove(i--);
 				}
 			}
 			List<EmpruntEntity> emprunts = ServiceEmpruntDAO.consulterListeEmprunts();
 			for (int i = 0; i < emprunts.size(); i++) {
 				if (emprunts.get(i).getIdAdherent() == adherentEntity.getIdAdherent()) {
 					System.out.println("supprimerAdherent> Delete emprunt: " + emprunts.get(i));
-					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i--));
+					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i));
+					emprunts.remove(i--);
 				}
 			}
+			
+			System.out.println("supprimerAdherent> Fin");
 			
 			ServiceAdherentDAO.deleteAdherent(adherentEntity);
 			destinationPage = "redirect:/listerAdherent.htm";
 		} catch (MonException e) {
+			e.printStackTrace();
 			request.setAttribute("MesErreurs", e.getMessage());
 			destinationPage = "/vues/Erreur";
 		}
