@@ -6,16 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 
 <%@include file="vues/header.jsp" %>
 <body>
-<%@include file="vues/navigation.jsp"%>
-<div class="jumbotron text-center">
+<%@include file="vues/navigation.jsp" %>
+<div class="jumbotron text-center home-page">
 
-    <h1>Bienvenue sur la médiathèque de Polytech</h1>
+    <h1>Bienvenue sur Polydiathèque</h1>
+    <h2>La meilleure médiathèque.</h2>
+    <c:if test="${sessionScope.id == null  }">
+        <div class="se-connecter"><a href="/login.htm">Se connecter</a></div>
+    </c:if>
 </div>
-<h2>Sélectionnez dans le menu la fonctionnalité voulue !</h2>
-<%@include file="vues/footer.jsp"%>
+<%@include file="vues/footer.jsp" %>
 </body>
 </html>

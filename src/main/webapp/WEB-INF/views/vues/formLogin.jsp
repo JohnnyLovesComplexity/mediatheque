@@ -5,7 +5,7 @@
 <body>
 <%@include file="navigation.jsp"%>
 <form method="post" action="controleLogin.htm">
-<div class="col-md-12 well well-md">
+<div class="col-md-12 well well-md formulaire">
     <center><h1>Authentification</h1></center>
     <div class="form-horizontal">    
         <div class="form-group">
