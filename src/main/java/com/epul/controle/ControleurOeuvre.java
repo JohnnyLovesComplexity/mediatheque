@@ -6,6 +6,7 @@ import com.epul.metier.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -238,8 +239,17 @@ public class ControleurOeuvre {
 		String destination;
 
 		try {
-			OeuvreventeEntity oeuvre;
-			oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			OeuvreventeEntity oeuvre = ServiceOeuvreDAO.getOeuvreVenteById(Integer.parseInt(request.getParameter("id")));
+			
+			// Check if the masterpiece is reserved or acquired
+			List<ReservationEntity> reservations = ServiceReservationDAO.consulterListeReservations();
+			for (int i = 0; i < reservations.size(); i++) {
+				if (reservations.get(i).getIdOeuvrevente() == oeuvre.getIdOeuvrevente()) {
+					System.out.println("supprimerOeuvreVente> Delete reservation: " + reservations.get(i));
+					ServiceReservationDAO.deleteReservation(reservations.get(i--));
+				}
+			}
+			
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
 			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {
@@ -256,8 +266,17 @@ public class ControleurOeuvre {
 		String destination;
 
 		try {
-			OeuvrepretEntity oeuvre;
-			oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			OeuvrepretEntity oeuvre = ServiceOeuvreDAO.getOeuvrePretById(Integer.parseInt(request.getParameter("id")));
+			
+			// Check if the masterpiece is reserved or acquired
+			List<EmpruntEntity> emprunts = ServiceEmpruntDAO.consulterListeEmprunts();
+			for (int i = 0; i < emprunts.size(); i++) {
+				if (emprunts.get(i).getIdOeuvrepret() == oeuvre.getIdOeuvrepret()) {
+					System.out.println("supprimerOeuvrePret> Delete emprunt: " + emprunts.get(i));
+					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i--));
+				}
+			}
+			
 			ServiceOeuvreDAO.deleteOeuvre(oeuvre);
 			destination = "redirect:/listerOeuvre.htm";
 		} catch (Exception e) {

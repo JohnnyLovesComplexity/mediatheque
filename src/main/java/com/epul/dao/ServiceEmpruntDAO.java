@@ -2,6 +2,7 @@ package com.epul.dao;
 
 import com.epul.meserreurs.MonException;
 import com.epul.metier.EmpruntEntity;
+import com.epul.metier.ReservationEntity;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -38,6 +39,23 @@ public class ServiceEmpruntDAO {
             }
         } catch (Exception e) {
             throw new MonException("Impossible d'accèder à la SessionFactory: ", e.getMessage());
+        }
+    }
+    
+    public static void deleteEmprunt(EmpruntEntity emprunt) throws MonException {
+        Transaction tx = null;
+        try (Session session = ServiceHibernate.currentSession()) {
+            tx = session.beginTransaction();
+            session.delete(emprunt);
+            tx.commit();
+        }
+        catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
+        catch (Exception e) {
+            throw new MonException("Impossible d'accèder à la SessionFactory: ",  e.getMessage());
         }
     }
 
