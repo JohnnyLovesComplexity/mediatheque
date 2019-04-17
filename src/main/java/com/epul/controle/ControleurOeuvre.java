@@ -321,9 +321,13 @@ public class ControleurOeuvre {
             reservation.setIdAdherent(Integer.parseInt(request.getParameter("adherentId")));
             reservation.setStatut("En attente");
 			reservation.setDateReservation(new java.sql.Date(new java.util.Date().getTime()));
-			ServiceReservationDAO.insertReservation(reservation);
 
-            //TODO add status logic
+			ServiceReservationDAO.insertReservation(reservation);
+			oeuvre.setEtatOeuvrevente("R");
+			ServiceOeuvreDAO.updateOeuvre(oeuvre);
+
+			request.setAttribute("oeuvrespret", ServiceOeuvreDAO.listOeuvrePret());
+			request.setAttribute("oeuvresvente", ServiceOeuvreDAO.listOeuvreVente());
 
             destination = "vues/listerOeuvres";
 
@@ -352,6 +356,10 @@ public class ControleurOeuvre {
 			ServiceEmpruntDAO.insertEmprunt(emprunt);
 			oeuvre.setEtatOeuvrepret("R");
 			ServiceOeuvreDAO.updateOeuvre(oeuvre);
+
+			request.setAttribute("oeuvrespret", ServiceOeuvreDAO.listOeuvrePret());
+			request.setAttribute("oeuvresvente", ServiceOeuvreDAO.listOeuvreVente());
+
             destination = "vues/listerOeuvres";
 
 		} catch (Exception e) {

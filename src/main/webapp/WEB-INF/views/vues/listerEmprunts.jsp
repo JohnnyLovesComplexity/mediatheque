@@ -5,7 +5,7 @@
 <body>
 <%@include file="navigation.jsp"%>
 <div class="jumbotron text-center">
-    <h1>Listing des Réservations</h1>
+    <h1>Listing des Emprunts</h1>
 </div>
 
 <div class="container">
@@ -27,6 +27,14 @@
                     <td>${item.adherentByIdAdherent.nomAdherent}</td>
                     <td>${item.dateReservation}</td>
                     <td>${item.statusByIdStatut.name}</td>
+                    <td>
+                        <a class="btn btn-info" href="validerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.nomAdherent}
+                        &date=${item.dateReservation}"
+                            role="button"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a class="btn btn-danger" href="annulerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.nomAdherent}
+                        &date=${item.dateReservation}"
+                            role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

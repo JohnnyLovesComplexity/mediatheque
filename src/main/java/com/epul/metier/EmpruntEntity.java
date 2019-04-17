@@ -62,7 +62,7 @@ public class EmpruntEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_oeuvrepret", referencedColumnName = "id_oeuvrepret", nullable = false)
+    @JoinColumn(name = "id_oeuvrepret", referencedColumnName = "id_oeuvrepret", nullable = false, insertable = false, updatable = false)
     public OeuvrepretEntity getOeuvrepretByIdOeuvrepret() {
         return oeuvrepretByIdOeuvrepret;
     }
@@ -72,7 +72,7 @@ public class EmpruntEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_adherent", referencedColumnName = "id_adherent", nullable = false)
+    @JoinColumn(name = "id_adherent", referencedColumnName = "id_adherent", nullable = false, insertable = false, updatable = false)
     public AdherentEntity getAdherentByIdAdherent() {
         return adherentByIdAdherent;
     }
@@ -92,7 +92,7 @@ public class EmpruntEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_statut", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_statut", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     public StatusEntity getStatusByIdStatut() {
         return statusByIdStatut;
     }
