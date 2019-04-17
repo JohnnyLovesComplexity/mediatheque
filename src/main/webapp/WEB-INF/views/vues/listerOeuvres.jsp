@@ -77,7 +77,7 @@
                     <td>
                         <c:if test="${pret.etatOeuvrepret == 'R'}">
                             <a disabled class="btn btn-info"
-                               role="button"><span class="glyphicon glyphicon-pencil"></span> Réserver</a>
+                               role="button"><span class="glyphicon glyphicon-pencil"></span> Emprunter</a>
                         </c:if>
                         <c:if test="${pret.etatOeuvrepret != 'R'}">
                             <a class="btn btn-info" href="emprunterOeuvrePret.htm?id=${pret.idOeuvrepret}"
