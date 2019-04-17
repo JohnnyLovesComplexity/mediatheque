@@ -2,21 +2,17 @@
          pageEncoding="UTF-8" %>
 
 <%@include file="header.jsp" %>
-<body>
+<body class="liste">
 <%@include file="navigation.jsp" %>
 <div class="jumbotron text-center">
-    <h1>Listing des Oeuvres</h1>
+    <h1>Liste des oeuvres à la vente</h1>
 </div>
 
 <div class="container">
-    <a class="btn btn-secondary" href="index.htm" role="button"><span class="glyphicon glyphicon-menu-left"></span>
-        Retour accueil</a>
-    <h2>Tableau des Oeuvres</h2>
     <div class="container">
-        <h3>Liste des Oeuvres disponibles à la vente</h3>
         <a href="ajouterOeuvreVente.htm">
             <span class="glyphicon glyphicon-plus"></span>
-            Ajout Oeuvre en vente
+            Ajout d'une oeuvre en vente
         </a>
         <table class="table table-hover">
             <tr>
@@ -25,6 +21,7 @@
                 <th class="col-md-2">Prix</th>
                 <th class="col-md-4">Prénom propriétaire</th>
                 <th class="col-md-4">Nom propriétaire</th>
+                <th class="col-md-4">Edition</th>
             </tr>
 
             <c:forEach items="${oeuvresvente}" var="vente">
@@ -97,7 +94,6 @@
     </div>
 
 </div>
-<%@include file="footer.jsp" %>
 </body>
 
 </html>
