@@ -100,4 +100,17 @@ public class EmpruntEntity {
     public void setStatusByIdStatut(StatusEntity statusByIdStatut) {
         this.statusByIdStatut = statusByIdStatut;
     }
+    
+    @Override
+    public String toString() {
+        return "EmpruntEntity{" +
+                "idOeuvrepret=" + idOeuvrepret +
+                ", idAdherent=" + idAdherent +
+                ", dateReservation=" + dateReservation +
+                ", oeuvrepretByIdOeuvrepret=" + oeuvrepretByIdOeuvrepret +
+                ", adherentByIdAdherent=" + adherentByIdAdherent +
+                ", idStatut=" + idStatut +
+                ", statusByIdStatut=" + statusByIdStatut +
+                '}';
+    }
 }

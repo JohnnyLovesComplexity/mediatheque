@@ -91,7 +91,7 @@ CREATE TABLE `oeuvrepret` (
 INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`, `etat_oeuvrepret`) VALUES
 (1, 'Oeuvre en pret 1', 1000, 'L'),
 (2, 'Oeuvre en pret 2', 1000, 'L'),
-(3, 'TEST', 1000, 'L');
+(3, 'TEST', 1000, 'R');
 
 -- --------------------------------------------------------
 

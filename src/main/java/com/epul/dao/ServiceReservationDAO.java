@@ -41,4 +41,21 @@ public class ServiceReservationDAO {
             throw new MonException("Impossible d'accèder à la SessionFactory: ", e.getMessage());
         }
     }
+    
+    public static void deleteReservation(ReservationEntity reservation) throws MonException {
+        Transaction tx = null;
+        try (Session session = ServiceHibernate.currentSession()) {
+            tx = session.beginTransaction();
+            session.delete(reservation);
+            tx.commit();
+        }
+        catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+        }
+        catch (Exception e) {
+            throw new MonException("Impossible d'accèder à la SessionFactory: ",  e.getMessage());
+        }
+    }
 }

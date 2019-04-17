@@ -27,7 +27,7 @@
 <script>
     function relocate_home()
     {
-        location.href = "/";
+        location.href = "index.htm";
     }
 </script>
 <%@include file="footer.jsp"%>

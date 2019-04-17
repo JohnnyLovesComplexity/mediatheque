@@ -109,4 +109,16 @@ public class ReservationEntity {
     public void setAdherentByIdAdherent(AdherentEntity adherentByIdAdherent) {
         this.adherentByIdAdherent = adherentByIdAdherent;
     }
+    
+    @Override
+    public String toString() {
+        return "ReservationEntity{" +
+                "idOeuvrevente=" + idOeuvrevente +
+                ", idAdherent=" + idAdherent +
+                ", dateReservation=" + dateReservation +
+                ", statut='" + statut + '\'' +
+                ", oeuvreventeByIdOeuvrevente=" + oeuvreventeByIdOeuvrevente +
+                ", adherentByIdAdherent=" + adherentByIdAdherent +
+                '}';
+    }
 }
