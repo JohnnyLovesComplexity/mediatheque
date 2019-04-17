@@ -16,7 +16,7 @@
     <h1>Bienvenue sur Polydiathèque</h1>
     <h2>La meilleure médiathèque.</h2>
     <c:if test="${sessionScope.id == null  }">
-        <div class="se-connecter"><a href="/login.htm">Se connecter</a></div>
+        <div class="se-connecter"><a href="login.htm">Se connecter</a></div>
     </c:if>
 </div>
 <%@include file="vues/footer.jsp" %>

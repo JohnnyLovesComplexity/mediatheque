@@ -3,8 +3,12 @@ package com.epul.controle;
 //import javax.servlet.ServletContext;
 
 import com.epul.dao.ServiceAdherentDAO;
+import com.epul.dao.ServiceEmpruntDAO;
+import com.epul.dao.ServiceReservationDAO;
 import com.epul.meserreurs.MonException;
 import com.epul.metier.AdherentEntity;
+import com.epul.metier.EmpruntEntity;
+import com.epul.metier.ReservationEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 ///
 /// Les méthode du contrôleur répondent à des sollicitations
@@ -74,9 +79,31 @@ public class ControleurAdherent {
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
 			AdherentEntity adherentEntity = ServiceAdherentDAO.adherentById(id);
+			
+			// Check if the adherent ahs a reservation
+			List<ReservationEntity> reservations = ServiceReservationDAO.consulterListeReservations();
+			for (int i = 0; i < reservations.size(); i++) {
+				if (reservations.get(i).getIdAdherent() == adherentEntity.getIdAdherent()) {
+					System.out.println("supprimerAdherent> Delete reservation: " + reservations.get(i));
+					ServiceReservationDAO.deleteReservation(reservations.get(i));
+					reservations.remove(i--);
+				}
+			}
+			List<EmpruntEntity> emprunts = ServiceEmpruntDAO.consulterListeEmprunts();
+			for (int i = 0; i < emprunts.size(); i++) {
+				if (emprunts.get(i).getIdAdherent() == adherentEntity.getIdAdherent()) {
+					System.out.println("supprimerAdherent> Delete emprunt: " + emprunts.get(i));
+					ServiceEmpruntDAO.deleteEmprunt(emprunts.get(i));
+					emprunts.remove(i--);
+				}
+			}
+			
+			System.out.println("supprimerAdherent> Fin");
+			
 			ServiceAdherentDAO.deleteAdherent(adherentEntity);
 			destinationPage = "redirect:/listerAdherent.htm";
 		} catch (MonException e) {
+			e.printStackTrace();
 			request.setAttribute("MesErreurs", e.getMessage());
 			destinationPage = "/vues/Erreur";
 		}

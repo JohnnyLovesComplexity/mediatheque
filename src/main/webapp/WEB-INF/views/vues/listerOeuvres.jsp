@@ -54,7 +54,7 @@
         </table>
     </div>
     <div class="container">
-        <h3>Liste des Oeuvres disponibles au prêt</h3>
+        <h3>Liste des Oeuvres en prêt ou en attente d'être en prêt</h3>
         <a href="ajouterOeuvrePret.htm">
             <span class="glyphicon glyphicon-plus"></span>
             Ajout Oeuvre en prêt
