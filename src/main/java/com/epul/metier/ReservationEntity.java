@@ -91,7 +91,7 @@ public class ReservationEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_oeuvrevente", referencedColumnName = "id_oeuvrevente", nullable = false)
+    @JoinColumn(name = "id_oeuvrevente", referencedColumnName = "id_oeuvrevente", nullable = false, insertable = false, updatable = false)
     public OeuvreventeEntity getOeuvreventeByIdOeuvrevente() {
         return oeuvreventeByIdOeuvrevente;
     }
@@ -101,7 +101,7 @@ public class ReservationEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_adherent", referencedColumnName = "id_adherent", nullable = false)
+    @JoinColumn(name = "id_adherent", referencedColumnName = "id_adherent", nullable = false, insertable = false, updatable = false)
     public AdherentEntity getAdherentByIdAdherent() {
         return adherentByIdAdherent;
     }

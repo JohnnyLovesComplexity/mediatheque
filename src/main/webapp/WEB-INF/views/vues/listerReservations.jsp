@@ -24,6 +24,12 @@
                     <td>${item.adherentByIdAdherent.nomAdherent}</td>
                     <td>${item.dateReservation}</td>
                     <td>${item.statut}</td>
+                    <td>
+                        <a class="btn btn-info" href="validerReservation.htm?id=${item.oeuvreventeByIdOeuvrevente.idOeuvrevente}"
+                           role="button"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a class="btn btn-danger" href="annulerReservation.htm?id=${item.oeuvreventeByIdOeuvrevente.idOeuvrevente}"
+                           role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
