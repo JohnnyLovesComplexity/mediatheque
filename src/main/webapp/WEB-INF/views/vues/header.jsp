@@ -23,7 +23,7 @@
     }
 </script>
     <meta charset="UTF-8">
-    <title>${title}</title>
+<%--    <title>${title}</title>--%>
 </head>
 
 
