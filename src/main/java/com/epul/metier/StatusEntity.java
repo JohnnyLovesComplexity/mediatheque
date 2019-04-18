@@ -12,7 +12,7 @@ public class StatusEntity {
     private Collection<EmpruntEntity> empruntsById;
 
     @Id
-    @Column(name = "id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
