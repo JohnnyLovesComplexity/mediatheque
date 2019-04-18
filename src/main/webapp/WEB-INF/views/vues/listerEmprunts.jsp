@@ -16,6 +16,8 @@
                 <th class="col-md-2">Adhérent</th>
                 <th class="col-md-2">Date</th>
                 <th class="col-md-2">Statut</th>
+                <th class="col-md-2">Confirmer</th>
+                <th class="col-md-2">Annuler</th>
             </tr>
 
             <c:forEach items="${emprunts}" var="item">
@@ -25,12 +27,16 @@
                     <td>${item.dateReservation}</td>
                     <td>${item.statusByIdStatut.name}</td>
                     <td>
-                        <a class="btn btn-info" href="validerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.nomAdherent}
-                        &date=${item.dateReservation}"
-                            role="button"><span class="glyphicon glyphicon-ok"></span></a>
-                        <a class="btn btn-danger" href="annulerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.nomAdherent}
-                        &date=${item.dateReservation}"
-                            role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                        <c:if test="${item.statusByIdStatut.name == 'En attente'}">
+                            <a class="btn btn-info" href="validerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.idAdherent}&date=${item.dateReservation}"
+                               role="button"><span class="glyphicon glyphicon-ok"></span></a>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${item.statusByIdStatut.name != 'Annule'}">
+                            <a class="btn btn-danger" href="annulerEmprunt.htm?id=${item.oeuvrepretByIdOeuvrepret.idOeuvrepret}&adh=${item.adherentByIdAdherent.idAdherent}&date=${item.dateReservation}"
+                               role="button"><span class="glyphicon glyphicon-remove"></span></a>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

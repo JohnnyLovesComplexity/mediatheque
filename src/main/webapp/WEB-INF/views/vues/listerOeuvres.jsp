@@ -17,20 +17,29 @@
         <table class="table table-hover">
             <tr>
                 <th class="col-md-1">Titre</th>
-                <th class="col-md-2">Etat</th>
                 <th class="col-md-2">Prix</th>
                 <th class="col-md-4">Prénom propriétaire</th>
                 <th class="col-md-4">Nom propriétaire</th>
+                <th class="col-md-2">Etat</th>
                 <th class="col-md-4">Edition</th>
+                <th class="col-md-4">Réservation</th>
+                <th class="col-md-4">Suppression</th>
             </tr>
 
             <c:forEach items="${oeuvresvente}" var="vente">
                 <tr>
                     <td>${vente.titreOeuvrevente}</td>
-                    <td>${vente.etatOeuvrevente}</td>
                     <td>${vente.prixOeuvrevente}</td>
                     <td>${vente.proprietaireByIdProprietaire.prenomProprietaire}</td>
                     <td>${vente.proprietaireByIdProprietaire.nomProprietaire}</td>
+                    <td>
+                        <c:if test="${vente.etatOeuvrevente == 'R'}">
+                            Réservée
+                        </c:if>
+                        <c:if test="${vente.etatOeuvrevente == 'L'}">
+                            Libre
+                        </c:if>
+                    </td>
                     <td>
                         <c:if test="${vente.etatOeuvrevente == 'R'}">
                             <a disabled class="btn btn-info"
@@ -53,9 +62,13 @@
             </c:forEach>
         </table>
     </div>
+
+    <div class="jumbotron text-center">
+        <h1>Liste des oeuvres en prêt</h1>
+    </div>
+
     <div class="container">
-        <h3>Liste des Oeuvres en prêt ou en attente d'être en prêt</h3>
-        <a href="ajouterOeuvrePret.htm">
+*        <a href="ajouterOeuvrePret.htm">
             <span class="glyphicon glyphicon-plus"></span>
             Ajout Oeuvre en prêt
         </a>
@@ -65,7 +78,9 @@
                 <th class="col-md-4">Prénom propriétaire</th>
                 <th class="col-md-4">Nom propriétaire</th>
                 <th class="col-md-4">Etat</th>
-
+                <th class="col-md-4">Edition</th>
+                <th class="col-md-4">Réservation</th>
+                <th class="col-md-4">Suppression</th>
             </tr>
 
             <c:forEach items="${oeuvrespret}" var="pret">
@@ -73,7 +88,14 @@
                     <td>${pret.titreOeuvrepret}</td>
                     <td>${pret.proprietaireByIdProprietaire.prenomProprietaire}</td>
                     <td>${pret.proprietaireByIdProprietaire.nomProprietaire}</td>
-                    <td>${pret.etatOeuvrepret}</td>
+                    <td>
+                        <c:if test="${pret.etatOeuvrepret == 'R'}">
+                            Réservée
+                        </c:if>
+                        <c:if test="${pret.etatOeuvrepret == 'L'}">
+                            Libre
+                        </c:if>
+                    </td>
                     <td>
                         <c:if test="${pret.etatOeuvrepret == 'R'}">
                             <a disabled class="btn btn-info"

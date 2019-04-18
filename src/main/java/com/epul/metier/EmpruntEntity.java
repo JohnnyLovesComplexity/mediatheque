@@ -82,7 +82,7 @@ public class EmpruntEntity {
     }
 
     @Basic
-    @Column(name = "id_statut", nullable = false, insertable = false, updatable = false)
+    @Column(name = "id_statut", nullable = false)
     public Integer getIdStatut() {
         return idStatut;
     }
