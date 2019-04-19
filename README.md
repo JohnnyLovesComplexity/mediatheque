@@ -1,6 +1,6 @@
 # Mediatheque #
 
-Web class project using spring and [Angular](https://angular.io/) to display, modify and delete books.
+Web class project using spring to display, modify and delete books.
 
 ## Getting Started ##
 
@@ -19,6 +19,8 @@ git clone https://github.com/JohnnyLovesComplexity/mediatheque.git
 ```
 
 Then, open it using [IntelliJ IDEA](https://www.jetbrains.com/idea/). Once your project is open, you need to configure it properly according to your machine by clicking on the configuration (top-right corner) and click on `Configure Project`. Please make sure that all fields are valid accordingly to your system.
+
+Make sure to import the `sql/baseoeuvre_new.sql` file in your phpMyAdmin.
 
 ## Contributors ##
 

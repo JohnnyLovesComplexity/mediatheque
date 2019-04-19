@@ -68,7 +68,7 @@
     </div>
 
     <div class="container">
-*        <a href="ajouterOeuvrePret.htm">
+        <a href="ajouterOeuvrePret.htm">
             <span class="glyphicon glyphicon-plus"></span>
             Ajout Oeuvre en prêt
         </a>

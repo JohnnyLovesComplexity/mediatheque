@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 12 avr. 2019 à 13:59
+-- Généré le :  ven. 19 avr. 2019 à 10:46
 -- Version du serveur :  10.1.37-MariaDB
 -- Version de PHP :  7.3.1
 
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `baseoeuvre`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Suppresion des tables
+--
+DROP TABLE IF EXISTS `utilisateur`;
+DROP TABLE IF EXISTS `emprunt`;
+DROP TABLE IF EXISTS `reservation`;
+DROP TABLE IF EXISTS `status`;
+DROP TABLE IF EXISTS `adherent`;
+DROP TABLE IF EXISTS `oeuvrepret`;
+DROP TABLE IF EXISTS `oeuvrevente`;
+DROP TABLE IF EXISTS `proprietaire`;
 
 -- --------------------------------------------------------
 
@@ -47,7 +61,6 @@ INSERT INTO `adherent` (`id_adherent`, `nom_adherent`, `prenom_adherent`, `ville
 (7, 'FRUCCI', 'Fraise', 'Craponne'),
 (8, 'BRUN', 'Pierre', 'Lyon'),
 (9, 'Blanc', 'Serge', 'Oullins'),
-(10, 'Salaun', 'AmÃƒÂ©lie', 'Madrid'),
 (11, 'VIAL', 'albert  ', 'Lyon'),
 (12, 'VIAL', 'fg  ', 'Lyon'),
 (13, 'Grand', 'Alain', 'Tours'),
@@ -68,8 +81,13 @@ CREATE TABLE `emprunt` (
   `id_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `emprunt`
+--
 
-INSERT INTO `emprunt` (`id_oeuvrepret`, `id_adherent`, `date_reservation`, `id_statut`) VALUES ('3', '16', '2019-04-02', '1');
+INSERT INTO `emprunt` (`id_oeuvrepret`, `id_adherent`, `date_reservation`, `id_statut`) VALUES
+(1, 16, '2019-04-19', 1),
+(14, 16, '2019-04-19', 1);
 
 -- --------------------------------------------------------
 
@@ -89,9 +107,12 @@ CREATE TABLE `oeuvrepret` (
 --
 
 INSERT INTO `oeuvrepret` (`id_oeuvrepret`, `titre_oeuvrepret`, `id_proprietaire`, `etat_oeuvrepret`) VALUES
-(1, 'Oeuvre en pret 1', 1000, 'L'),
+(1, 'Oeuvre en pret 1', 1000, 'R'),
 (2, 'Oeuvre en pret 2', 1000, 'L'),
-(3, 'TEST', 1000, 'R');
+(10, 'Oeuvre en pret 3', 1000, 'L'),
+(13, 'Planet', 1001, 'L'),
+(14, 'Blanc', 1000, 'R'),
+(15, 'Rouge', 1002, 'L');
 
 -- --------------------------------------------------------
 
@@ -112,14 +133,19 @@ CREATE TABLE `oeuvrevente` (
 --
 
 INSERT INTO `oeuvrevente` (`id_oeuvrevente`, `titre_oeuvrevente`, `etat_oeuvrevente`, `prix_oeuvrevente`, `id_proprietaire`) VALUES
-(10000, 'lala', 'R', 17, 1000),
-(10001, 'Ete', 'R', 400, 1000),
+(10000, 'lala', 'L', 17, 1000),
+(10001, 'Ete', 'L', 400, 1000),
 (10002, 'Automne', 'R', 10, 1000),
 (10003, 'Crepuscule', 'L', 111, 1001),
-(10004, 'Hiver', 'R', 234, 1000),
+(10004, 'Hiver', 'L', 234, 1000),
 (10005, 'Aurore', 'R', 654, 1002),
 (10006, 'Nuit de printemps', 'L', 789, 1001),
-(10007, 'nouvelle Oeuvre 2', 'L', 12, 1000);
+(10007, 'nouvelle Oeuvre 2', 'L', 12, 1000),
+(10010, 'Titre', 'L', 4645, 1000),
+(10013, 'Oeuvre en vente', 'L', 456, 1000),
+(10014, 'Oeuvre en vente', 'L', 5465, 1000),
+(10015, 'Teeest', 'L', 2457, 1000),
+(10016, 'Bleu', 'L', 15, 1000);
 
 -- --------------------------------------------------------
 
@@ -160,11 +186,8 @@ CREATE TABLE `reservation` (
 --
 
 INSERT INTO `reservation` (`id_oeuvrevente`, `id_adherent`, `date_reservation`, `statut`) VALUES
-(10002, 3, '2017-06-14', 'en attente'),
-(10003, 3, '2013-02-22', 'confirmee'),
-(10004, 7, '2013-02-22', 'confirmee'),
-(10005, 8, '2018-06-04', 'confirmee'),
-(10005, 9, '2019-08-06', 'confirmee');
+(10002, 16, '2019-04-19', 'En attente'),
+(10005, 16, '2019-04-19', 'En attente');
 
 -- --------------------------------------------------------
 
@@ -183,8 +206,8 @@ CREATE TABLE `status` (
 
 INSERT INTO `status` (`id`, `name`) VALUES
 (1, 'En attente'),
-(2, 'Confirmé'),
-(3, 'Annulé');
+(2, 'Confirme'),
+(3, 'Annule');
 
 -- --------------------------------------------------------
 
@@ -273,19 +296,19 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `adherent`
 --
 ALTER TABLE `adherent`
-  MODIFY `id_adherent` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_adherent` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `oeuvrepret`
 --
 ALTER TABLE `oeuvrepret`
-  MODIFY `id_oeuvrepret` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_oeuvrepret` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `oeuvrevente`
 --
 ALTER TABLE `oeuvrevente`
-  MODIFY `id_oeuvrevente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10008;
+  MODIFY `id_oeuvrevente` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10017;
 
 --
 -- AUTO_INCREMENT pour la table `proprietaire`
